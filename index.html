@@ -357,11 +357,11 @@ const SKIP = {
 const DAYS = [
   { region:"Melbourne", ch:C.melb, title:"Fitzroy & Collingwood", stay:"Base: Melbourne (night 1 of 3)", hero:IMG.fitzroy,
     view:{center:[144.985,-37.800],zoom:12.4,pitch:50,bearing:18},
-    intro:"Land, drop the bags and walk straight into Melbourne's best inner-north — no car, just trams and your feet. Fitzroy and Collingwood for coffee, vintage stores and the city's densest bar strip, finishing with a long Brunswick St dinner.",
+    intro:"With the car returned, dive into Melbourne's best inner-north on foot and by tram. Fitzroy and Collingwood for coffee, vintage stores and the city's densest bar strip, finishing with a long Brunswick St dinner.",
     items:[
       {n:"Fitzroy & Gertrude St",r:null,k:"see",b:"Bohemian-polished core: best bar density, vintage and design shops. Your morning wander.",lat:-37.80600,lng:144.97900},
       {n:"Proud Mary",r:4.4,k:"coffee",b:"Institution-level Collingwood roastery — start the day with the city's signature export.",lat:-37.80230,lng:144.98515},
-      {n:"Collingwood — Smith St",r:null,k:"see",b:"Grittier creative strip: roasteries, record stores, live-music rooms. Walkable from Fitzroy.",lat:-37.80400,lng:144.98350},
+      {n:"Collingwood — Smith St",r:null,k:"see",b:"Grittier creative strip: roasteries, record stores, live-music rooms. Walkable from Fitzroy.",lat:-37.80400,lng:144.98350,img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Looking_north_on_Smith_Street_December_2020.jpg/960px-Looking_north_on_Smith_Street_December_2020.jpg"},
       {n:"Rose Street Artists' Market",r:4.6,k:"market",b:"Fitzroy weekends — handmade goods direct from makers, not mass tat.",lat:-37.79593,lng:144.97722}
     ],
     dining:{area:"Fitzroy & Collingwood", meals:{
@@ -372,11 +372,11 @@ const DAYS = [
 
   { region:"Melbourne", ch:C.melb, title:"Carlton & the Market", stay:"Base: Melbourne (night 2 of 3)", hero:IMG.qvm,
     view:{center:[144.965,-37.805],zoom:12.5,pitch:50,bearing:-14},
-    intro:"A Carlton day: Lygon Street's real Italian side streets and Readings bookshop, the Carlton Gardens, then down into the CBD for Queen Victoria Market's deli halls and the hidden artist studios of the Nicholas Building.",
+    intro:"Start the morning bayside at the Brighton bathing boxes (the Sandringham train runs straight there), then make it a Carlton day: Lygon Street's real Italian side streets and Readings bookshop, the Carlton Gardens, then down into the CBD for Queen Victoria Market's deli halls and the Nicholas Building's hidden artist studios.",
     items:[
-      {n:"Carlton — Lygon St & Readings",r:null,k:"see",b:"Skip the tourist strip; the side streets (Rathdowne, Drummond) and Readings bookshop are the real village.",lat:-37.79805,lng:144.96719},
+      {n:"Carlton — Lygon St & Readings",r:null,k:"see",b:"Skip the tourist strip; the side streets (Rathdowne, Drummond) and Readings bookshop are the real village.",lat:-37.79805,lng:144.96719,img:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Lygon_Street%2C_Carlton.jpg/960px-Lygon_Street%2C_Carlton.jpg"},
       {n:"Queen Victoria Market",r:4.4,k:"market",b:"Go for the deli and food halls (Hellenic Deli since 1972); skip the import-tat sheds.",lat:-37.80747,lng:144.95705},
-      {n:"Nicholas Building",r:4.5,k:"see",b:"Heritage building full of artist studios, tiny galleries and quirky shops. Hidden Melbourne.",lat:-37.81676,lng:144.96679}
+      {n:"Nicholas Building",r:4.5,k:"see",b:"Heritage building full of artist studios, tiny galleries and quirky shops. Hidden Melbourne.",lat:-37.81676,lng:144.96679,img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Nicholas_Building%2C_Melbourne.jpg/960px-Nicholas_Building%2C_Melbourne.jpg"}
     ],
     dining:{area:"Carlton — Lygon St", meals:{
       B:[{t:"$",n:"Brunetti Classico",a:"Lygon St, Carlton",r:4.3,b:"Cornetto + piccolo; side entrance skips the queue."},{t:"$$",n:"Humble Rays",a:"Carlton",r:4.6,b:"Crab-meat scramble is the standout; worth the wait."}],
@@ -386,11 +386,11 @@ const DAYS = [
 
   { region:"Melbourne", ch:C.melb, title:"Laneways & Gardens", stay:"Base: Melbourne (night 3 of 3)", hero:IMG.botanic,
     view:{center:[144.968,-37.816],zoom:12.5,pitch:52,bearing:8},
-    intro:"Your last city day leans south — CBD laneways by morning, the Royal Botanic Gardens at their late-spring best, and South Melbourne Market for lunch. Pick up nothing heavier than a coffee; tomorrow you drive.",
+    intro:"Your last morning before flying out leans south — CBD laneways, the Royal Botanic Gardens at their late-spring best, and South Melbourne Market. Keep it light: a coffee, an easy wander, then out to the airport.",
     items:[
       {n:"Patricia Coffee Brewers",r:4.6,k:"coffee",b:"Standing-room espresso bar; the connoisseur's pick. In the Free Tram Zone.",lat:-37.81470,lng:144.95829},
       {n:"Royal Botanic Gardens Melbourne",r:4.7,k:"see",b:"89 acres, glorious in late spring — perfect for the 7–8pm golden hour.",lat:-37.82946,lng:144.98132},
-      {n:"South Melbourne Market",r:4.6,k:"market",b:"Best all-rounder for locals — go Tue/Wed/Fri morning, not the Saturday crush.",lat:-37.83217,lng:144.95649}
+      {n:"South Melbourne Market",r:4.6,k:"market",b:"Best all-rounder for locals — go Tue/Wed/Fri morning, not the Saturday crush.",lat:-37.83217,lng:144.95649,img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/South_Melbourne_market_outside_1a.jpg/960px-South_Melbourne_market_outside_1a.jpg"}
     ],
     dining:{area:"CBD laneways & South Melbourne", meals:{
       B:[{t:"$",n:"Manchester Press",a:"Rankins Lane, CBD",r:4.4,b:"Classic laneway gem; the bagels are the star."},{t:"$",n:"The Journal Cafe",a:"Nicholas Building, CBD",r:4.3,b:"Local-secret spot inside the Nicholas Building."},{t:"$$",n:"The Hardware Société",a:"Hardware St, CBD",r:4.5,b:"Signature baked eggs; expect a wait."}],
@@ -400,7 +400,7 @@ const DAYS = [
 
   { region:"Yarra Valley", ch:C.yarra, title:"Into the Vines", stay:"Base: Healesville (night 1 of 2) · ~1 hr drive", hero:IMG.yarra,
     view:{center:[145.45,-37.690],zoom:10.4,pitch:55,bearing:28},
-    intro:"Collect the rental car and point it east. An hour later the vines start. A long winery lunch, a couple of intimate cellar doors, gin in Healesville, then settle into the valley for two nights.",
+    intro:"Land in Melbourne, collect the rental car and point it east. An hour later the vines start — a long winery lunch, a couple of intimate cellar doors, gin in Healesville, then settle into the valley for two nights.",
     items:[
       {n:"Oakridge Wines",r:4.6,k:"wine",b:"One-hatted, seasonal lunch with a panoramic vineyard view. The best long-lunch pick (Thu–Mon).",lat:-37.68363,lng:145.45842},
       {n:"Pimpernel Vineyards",r:4.8,k:"wine",b:"Tiny family cellar door — the winemaker often pours. The standout intimate pick.",lat:-37.69106,lng:145.47337},
@@ -421,7 +421,7 @@ const DAYS = [
     items:[
       {n:"Black Spur Drive",r:null,k:"drive",b:"30km of twisting road under giant mountain ash. Drive early for misty light; pull into the picnic grounds.",lat:-37.60500,lng:145.55500,q:"Fernshaw Picnic Area Black Spur"},
       {n:"Steavenson Falls",r:4.7,k:"falls",b:"Tall falls near Marysville, short accessible walk; floodlit at night.",lat:-37.53283,lng:145.77400},
-      {n:"Maroondah Reservoir Park",r:4.6,k:"see",b:"Manicured gardens, dam-wall walk and lookout — easy and close to Healesville.",lat:-37.64422,lng:145.55075},
+      {n:"Maroondah Reservoir Park",r:4.6,k:"see",b:"Manicured gardens, dam-wall walk and lookout — easy and close to Healesville.",lat:-37.64422,lng:145.55075,img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Maroondah_Dam_at_capacity%2C_October_2011.jpg/960px-Maroondah_Dam_at_capacity%2C_October_2011.jpg"},
       {n:"Redwood Forest (Cement Creek)",r:4.7,k:"see",b:"Eerie rows of 90-year-old Californian redwoods, East Warburton. Go early; narrow access road.",lat:-37.71972,lng:145.75265}
     ],
     dining:{area:"Healesville & the day's route", meals:{
@@ -436,7 +436,7 @@ const DAYS = [
     items:[
       {n:"Foxeys Hangout",r:4.4,k:"wine",b:"Red Hill hidden-gem with a distant bay outlook. Tiny — arrive early (groups capped at 4).",lat:-38.36243,lng:145.01303},
       {n:"Pt. Leo Estate — Sculpture Park",r:4.5,k:"see",b:"~60 monumental works on a bay-front lawn (1–2 hrs). Skip the casual Wine Terrace.",lat:-38.40617,lng:145.07476},
-      {n:"Bushrangers Bay Walk",r:4.7,k:"walk",b:"Secluded basalt-cliff cove with kangaroos en route; no facilities keeps the crowds out. Best unique pick.",lat:-38.47340,lng:144.92757},
+      {n:"Bushrangers Bay Walk",r:4.7,k:"walk",b:"Secluded basalt-cliff cove with kangaroos en route; no facilities keeps the crowds out. Best unique pick.",lat:-38.47340,lng:144.92757,img:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Bushrangers_Bay%2C_Mornington_Peninsula_National_Park_Victoria_Australia.jpeg/960px-Bushrangers_Bay%2C_Mornington_Peninsula_National_Park_Victoria_Australia.jpeg"},
       {n:"Cape Schanck Boardwalk & Lighthouse",r:4.6,k:"walk",b:"Timber stairs down volcanic cliffs to a wave-pounded platform; 1859 lighthouse above.",lat:-38.49275,lng:144.88652,img:IMG.capeschanck},
       {n:"Sorrento Back Beach rock pools",r:null,k:"see",b:"Go ~2 hrs either side of low tide for clear aquamarine pools. Scenery, not open-water swimming.",lat:-38.34682,lng:144.72833},
       {n:"Pond Bathhouse",r:4.8,k:"spring",b:"Quietest and highest-rated springs — capped at 16, adults-only. Best quiet soak; book early.",lat:-38.21660,lng:145.03753},
@@ -453,7 +453,7 @@ const DAYS = [
     view:{center:[143.82,-38.650],zoom:9.6,pitch:60,bearing:40},
     intro:"Roll onto the morning ferry and skip Melbourne entirely, landing at the start of the Great Ocean Road. A lighthouse, a waterfall, wild koalas at Kennett River, and a sunset over Apollo Bay.",
     items:[
-      {n:"Searoad Ferry",r:4.4,k:"ferry",b:"The 40-min crossing IS the experience (dolphins & seals common). Pre-book the 7/8am sailing.",lat:-38.33671,lng:144.74485,q:"Searoad Ferries Sorrento Terminal"},
+      {n:"Searoad Ferry",r:4.4,k:"ferry",b:"The 40-min crossing IS the experience (dolphins & seals common). Pre-book the 7/8am sailing.",lat:-38.33671,lng:144.74485,img:"https://upload.wikimedia.org/wikipedia/commons/6/65/Queenscliffvic-airview-0508-2601-63.jpg",q:"Searoad Ferries Sorrento Terminal"},
       {n:"Split Point Lighthouse",r:4.5,k:"view",b:"The “Round the Twist” lighthouse, Aireys Inlet. Do the free Eagle Rock clifftop walk; skip the paid climb.",lat:-38.46772,lng:144.10424,img:IMG.splitpoint},
       {n:"Memorial Arch, Eastern View",r:4.5,k:"see",b:"The classic Great Ocean Road sign photo. Shoot it fast (mid-morning bottleneck) and move on.",lat:-38.47192,lng:144.04453,img:IMG.gorsign},
       {n:"Teddy's Lookout, Lorne",r:4.6,k:"view",b:"5-minute walk to where the St George River bends to meet the ocean. Best low-crowd short stop.",lat:-38.55425,lng:143.97890},
@@ -473,12 +473,12 @@ const DAYS = [
     intro:"Through the Otway rainforest — boardwalks under giant tree ferns, koalas on Lighthouse Road — then out to the Shipwreck Coast to stand at the Twelve Apostles as the buses leave and the cliffs turn gold (~8:30pm).",
     items:[
       {n:"Maits Rest Rainforest Walk",r:4.7,k:"walk",b:"800m boardwalk loop through 300-year-old myrtle beech and giant tree ferns. Feels prehistoric. Top pick.",lat:-38.75600,lng:143.57600,img:IMG.otway},
-      {n:"Cape Otway koala drive",r:null,k:"koala",b:"Free, and one of Victoria's most reliable wild-koala stretches. Drive slow, look up. Skip the paid lightstation.",lat:-38.82000,lng:143.51500,q:"Lighthouse Road Cape Otway koalas"},
+      {n:"Cape Otway koala drive",r:null,k:"koala",b:"Free, and one of Victoria's most reliable wild-koala stretches. Drive slow, look up. Skip the paid lightstation.",lat:-38.82000,lng:143.51500,img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Cape_Otway.jpg/960px-Cape_Otway.jpg",q:"Lighthouse Road Cape Otway koalas"},
       {n:"Triplet Falls",r:4.6,k:"falls",b:"2km loop, three-tier cascade through mountain ash — the most scenic Otway falls.",lat:-38.67111,lng:143.49306,img:IMG.triplet},
       {n:"Hopetoun Falls",r:4.6,k:"falls",b:"30m drop into a fern gully; short but steep stairs. Pairs with nearby Beauchamp Falls (4.8).",lat:-38.66778,lng:143.57028,img:IMG.hopetoun},
       {n:"Twelve Apostles",r:4.7,k:"see",b:"The icon — go at sunset when the cliffs glow orange and the crowds have cleared.",lat:-38.66583,lng:143.10444,img:IMG.apostles},
       {n:"Gibson Steps",r:4.7,k:"walk",b:"89 steps to stand beneath the cliffs (beach reopened Feb 2026). Best at low tide.",lat:-38.66833,lng:143.11194,img:IMG.gibson},
-      {n:"Melba Gully glow worms",r:4.6,k:"see",b:"Hundreds of glow worms after full dark (~9:15pm) near Lavers Hill. A dedicated detour, but memorable. Dim/red torch only.",lat:-38.69801,lng:143.37046},
+      {n:"Melba Gully glow worms",r:4.6,k:"see",b:"Hundreds of glow worms after full dark (~9:15pm) near Lavers Hill. A dedicated detour, but memorable. Dim/red torch only.",lat:-38.69801,lng:143.37046,img:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Melba_Gully_State_Park.jpg/960px-Melba_Gully_State_Park.jpg"},
       {n:"Port Campbell",r:null,k:"stay",b:"2-night base. Stay: Sea Foam Villas (bay-view, central) or Daysy Hill Country Cottages.",lat:-38.61960,lng:142.99540,img:IMG.portcampbell}
     ],
     dining:{area:"Apollo Bay → the Otways (thin for food — pack a snack) → Port Campbell", meals:{
@@ -517,6 +517,35 @@ const DAYS = [
     }}, skip:SKIP.ret }
 ];
 
+/* ---- reshape: road trip first, Melbourne last; Daylesford in, Brighton & Loch Ard in ---- */
+DAYS[1].items.push({n:"Brighton Bathing Boxes",r:4.5,k:"see",b:"The 82 candy-coloured Victorian bathing boxes on Dendy Street Beach — ~25 min from the city by train (Sandringham line). Best at sunrise or golden hour.",lat:-37.91917,lng:144.98778,img:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Brighton_Beach_%28147363021%29.jpeg/960px-Brighton_Beach_%28147363021%29.jpeg",q:"Brighton Bathing Boxes Dendy Street Beach"});
+DAYS[7].items.splice(6,0,{n:"Loch Ard Gorge",r:4.8,k:"see",b:"Gorge, blowhole and the Razorback — ~5 min from the Apostles; quiet at sunrise before you drive on.",lat:-38.64642,lng:143.07061,img:IMG.lochard});
+REGIONS.push({name:"Daylesford & Spa Country",ch:"#7A6A8C"});
+const DAYLESFORD={region:"Daylesford & Spa Country",ch:"#7A6A8C",title:"Daylesford — Spa Country",stay:"Base: Daylesford (1 night) · ~3 hr from Port Campbell",hero:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Aerial_panorama_of_Lake_Daylesford.jpg/960px-Aerial_panorama_of_Lake_Daylesford.jpg",view:{center:[144.145,-37.342],zoom:11,pitch:50,bearing:-15},intro:"Point the car north-east out of the Otways. Break the ~3-hour drive at Timboon and the Camperdown crater lakes, then climb into spa country for a mineral-springs afternoon, a lake walk, and — if you book it — dinner at the legendary Lake House.",items:[
+{n:"Timboon Railway Shed Distillery",r:4.5,k:"eat",b:"~20 min off Port Campbell — whisky distillery with a genuinely good deck lunch to start the drive.",lat:-38.48435,lng:142.97787,img:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Timboon_Shops_002.JPG/960px-Timboon_Shops_002.JPG"},
+{n:"Lakes Bullen Merri & Gnotuk",r:4.5,k:"see",b:"Twin volcanic crater lakes beside Camperdown — a scenic leg-stretch on the way up.",lat:-38.27000,lng:143.10000,img:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Lake_Bullen_Merri_at_Sunset.jpg/960px-Lake_Bullen_Merri_at_Sunset.jpg"},
+{n:"Hepburn Mineral Springs Reserve",r:4.6,k:"spring",b:"Free 30-ha heritage reserve — taste the naturally carbonated waters at the old hand pumps. The genuine local highlight.",lat:-37.31167,lng:144.14194},
+{n:"Hepburn Bathhouse & Spa",r:3.7,k:"spring",b:"The 1895 mineral-bathing icon (refurbished 2025). The waters are the draw; book online ahead and manage expectations.",lat:-37.31000,lng:144.14306},
+{n:"Lake Daylesford",r:4.6,k:"walk",b:"Pretty former gold-diggings lake; the easy 2.8km Peace Mile loop, kayak hire, Lake House on its shore.",lat:-37.34472,lng:144.14861},
+{n:"Wombat Hill Botanic Gardens",r:4.6,k:"see",b:"1860s gardens atop an extinct volcano — sequoias, elms, a lookout tower and a garden-to-table cafe.",lat:-37.34306,lng:144.15056},
+{n:"The Amazing Mill Markets",r:4.3,k:"market",b:"Cavernous indoor vintage and antiques emporium — an easy hour or two; good rainy-day option.",lat:-37.34889,lng:144.13556},
+{n:"Daylesford",r:null,k:"stay",b:"Overnight in spa country. Stay: Lake House, a Hepburn Springs guesthouse, or a town cottage.",lat:-37.34306,lng:144.14000}
+],dining:{area:"the drive up, then Daylesford & Hepburn Springs",meals:{
+B:[{t:"$$",n:"Cliffy's Emporium",a:"Daylesford",r:4.6,b:"Beloved 1950s rustic cafe; the Cliffy's Benedict is the order."},{t:"$",n:"Sweet Decadence at Locantro",a:"Daylesford",r:4.4,b:"Original coffee + handmade-chocolate shop; cheap and cheerful."}],
+L:[{t:"$",n:"Himalaya Bakery",a:"Daylesford",r:4.3,b:"Organic sourdough, vegan/GF cakes — great grab-and-go."},{t:"$$",n:"Frank & Connie's Kitchen",a:"Hepburn Springs",r:4.4,b:"Family-run, seasonal local produce — pairs with a springs morning."}],
+D:[{t:"$$",n:"The Surly Goat",a:"Hepburn Springs",r:4.5,b:"Relaxed wood-fired/seasonal bistro with a strong local following."},{t:"$$",n:"Frangos & Frangos",a:"Daylesford",r:4.2,b:"Lively main-street bar/bistro for a casual night."},{t:"$$$",n:"Lake House",a:"Daylesford",r:4.6,b:"Alla Wolf-Tasker's lakeside icon since 1984 — the destination splurge. Book well ahead."}]
+}},skip:["<b>Hepburn Bathhouse</b> &amp; the Convent café underperform the hype — fine, but lead with the free Mineral Springs Reserve, Lake Daylesford and Wombat Hill Gardens.","<b>Daylesford Sunday Market</b> — only worth timing for if you're there on a Sunday."]};
+const BACK=DAYS[9];
+Object.assign(BACK,{title:"Back to Melbourne",region:"The Return",stay:"Drop the car in the city · ~1h20 from Daylesford",hero:IMG.melb,view:{center:[144.70,-37.55],zoom:8.7,pitch:45,bearing:0},intro:"A relaxed Daylesford breakfast, then the easy run down through the Macedon Ranges into Melbourne. Drop the car, check in, and ease into three car-free days in the city.",items:[
+{n:"Hanging Rock",r:4.5,k:"see",b:"The eerie volcanic outcrop of Picnic at Hanging Rock fame, Macedon Ranges — a short climb, roughly on the way down.",lat:-37.36667,lng:144.59000}
+],dining:{area:"Daylesford breakfast → Macedon Ranges → Melbourne",meals:{
+B:[{t:"$",n:"Sweet Decadence at Locantro",a:"Daylesford",r:4.4,b:"A last coffee and pastry before the drive."}],
+L:[{t:"$",n:"Woodend & Macedon bakeries",a:"en route",b:"Grab lunch in Woodend or Macedon as you pass through the ranges."}],
+D:[{t:"$$",n:"Cumulus Inc.",a:"Flinders Lane, CBD",r:4.5,b:"Ease back into the city with McConnell's all-day diner."},{t:"$$",n:"Stalactites",a:"CBD",r:4.4,b:"Late-night Greek souvlaki if you arrive hungry."}]
+}}});
+BACK.skip=undefined;BACK.tours=undefined;
+const _ORD=[DAYS[3],DAYS[4],DAYS[5],DAYS[6],DAYS[7],DAYLESFORD,BACK,DAYS[0],DAYS[1],DAYS[2]];
+DAYS.length=0;Array.prototype.push.apply(DAYS,_ORD);
 /* precomputed OSRM driving geometry (lon,lat) */
 const ROUTE_A = [[144.96297,-37.81364],[144.96217,-37.81225],[144.96594,-37.81115],[144.97104,-37.80964],[144.97306,-37.80809],[144.97666,-37.80808],[144.98373,-37.80883],[144.98998,-37.80948],[144.99166,-37.80727],[144.99286,-37.80008],[144.99346,-37.7962],[144.99187,-37.7945],[144.99441,-37.79516],[145.00617,-37.79366],[145.02285,-37.79119],[145.04693,-37.79077],[145.05704,-37.78686],[145.06742,-37.78424],[145.0804,-37.77973],[145.09998,-37.78435],[145.10884,-37.79335],[145.13209,-37.79723],[145.16273,-37.80191],[145.17774,-37.80384],[145.18811,-37.80082],[145.19536,-37.80075],[145.21421,-37.81106],[145.22199,-37.81017],[145.23071,-37.81055],[145.24007,-37.8087],[145.24734,-37.80284],[145.25418,-37.79763],[145.26353,-37.79102],[145.27542,-37.78664],[145.28266,-37.78333],[145.29294,-37.77399],[145.29765,-37.76894],[145.30883,-37.76265],[145.31394,-37.75856],[145.3208,-37.75894],[145.32958,-37.76059],[145.33919,-37.75983],[145.34274,-37.75618],[145.34655,-37.75677],[145.35066,-37.75755],[145.35525,-37.7574],[145.36459,-37.75353],[145.37273,-37.7499],[145.37389,-37.74625],[145.37418,-37.73798],[145.37791,-37.728],[145.37951,-37.72116],[145.38444,-37.71964],[145.38795,-37.71274],[145.39706,-37.70945],[145.408,-37.70706],[145.42111,-37.6966],[145.42442,-37.6851],[145.45045,-37.68346],[145.48182,-37.68339],[145.4857,-37.67811],[145.49062,-37.67753],[145.50464,-37.67716],[145.51146,-37.67012],[145.51336,-37.66278],[145.5165,-37.65908],[145.51483,-37.6555],[145.5118,-37.65586],[145.51224,-37.6611],[145.5119,-37.66761],[145.50795,-37.6751],[145.49264,-37.67711],[145.48631,-37.67737],[145.4839,-37.68126],[145.467,-37.68345],[145.42627,-37.684],[145.42226,-37.69039],[145.4097,-37.706],[145.4007,-37.70849],[145.38924,-37.71198],[145.38648,-37.71755],[145.38005,-37.72081],[145.37791,-37.728],[145.37446,-37.73751],[145.37386,-37.74599],[145.37296,-37.75001],[145.36264,-37.75492],[145.35652,-37.75738],[145.35169,-37.75749],[145.34705,-37.7569],[145.34339,-37.75607],[145.33979,-37.75835],[145.3342,-37.7612],[145.32172,-37.75916],[145.31431,-37.75868],[145.30967,-37.76232],[145.30183,-37.76665],[145.29367,-37.77245],[145.28405,-37.78292],[145.27772,-37.78583],[145.26595,-37.79016],[145.25725,-37.79562],[145.24743,-37.80302],[145.238,-37.81076],[145.22795,-37.81064],[145.21866,-37.81149],[145.21701,-37.81666],[145.21729,-37.84596],[145.21151,-37.86457],[145.21449,-37.88194],[145.21526,-37.90182],[145.21545,-37.91869],[145.20534,-37.94559],[145.1973,-37.96335],[145.19287,-37.98023],[145.1918,-37.9967],[145.18767,-38.01586],[145.18975,-38.02712],[145.18434,-38.05758],[145.17921,-38.0794],[145.17028,-38.08618],[145.15471,-38.09638],[145.16967,-38.1183],[145.17366,-38.13352],[145.16613,-38.16138],[145.15382,-38.19308],[145.13919,-38.20149],[145.12696,-38.22617],[145.11037,-38.2607],[145.08914,-38.27078],[145.07373,-38.27046],[145.06071,-38.27573],[145.04961,-38.28715],[145.03506,-38.29946],[145.01087,-38.31836],[144.98614,-38.33168],[144.96007,-38.34159],[144.94352,-38.34616],[144.92933,-38.35462],[144.91786,-38.36371],[144.90907,-38.37015],[144.90844,-38.3703],[144.90848,-38.36929],[144.90754,-38.36796],[144.89872,-38.36773],[144.88947,-38.36763],[144.87872,-38.3672],[144.87193,-38.36684],[144.87161,-38.36487],[144.86183,-38.36721],[144.84293,-38.37052],[144.83364,-38.37098],[144.82379,-38.37056],[144.81338,-38.36892],[144.80201,-38.36605],[144.78809,-38.36302],[144.77592,-38.36026],[144.76291,-38.35459],[144.76161,-38.34949],[144.75389,-38.34519],[144.74438,-38.33941],[144.74334,-38.33966]];
 const ROUTE_B = [[144.66166,-38.26789],[144.65239,-38.27095],[144.6273,-38.27211],[144.6137,-38.27261],[144.59042,-38.26458],[144.55802,-38.25954],[144.5385,-38.26861],[144.52414,-38.26959],[144.50824,-38.27331],[144.49886,-38.28196],[144.48729,-38.28188],[144.43895,-38.26449],[144.33713,-38.24914],[144.32249,-38.30133],[144.30202,-38.31303],[144.26462,-38.32614],[144.26281,-38.33888],[144.25178,-38.35209],[144.21652,-38.37675],[144.20445,-38.38831],[144.19218,-38.4046],[144.18629,-38.40784],[144.18401,-38.41498],[144.1735,-38.4211],[144.15252,-38.42934],[144.13513,-38.43239],[144.12197,-38.44001],[144.10649,-38.46053],[144.09389,-38.46495],[144.07943,-38.46823],[144.05106,-38.47087],[144.03341,-38.4777],[144.02928,-38.48161],[144.02521,-38.48257],[144.0247,-38.48431],[144.02353,-38.4891],[144.01591,-38.49213],[144.01025,-38.49784],[144.00683,-38.50058],[144.00176,-38.50976],[143.99356,-38.51643],[143.98487,-38.52564],[143.97499,-38.53483],[143.97414,-38.54239],[143.98325,-38.54808],[143.98197,-38.55454],[143.97587,-38.55509],[143.97626,-38.56117],[143.96912,-38.56714],[143.964,-38.57133],[143.95472,-38.57638],[143.94689,-38.57793],[143.93852,-38.58252],[143.93033,-38.58863],[143.92064,-38.59534],[143.9196,-38.60458],[143.91459,-38.61548],[143.9074,-38.62565],[143.89717,-38.63152],[143.89177,-38.63879],[143.88511,-38.6442],[143.87461,-38.65098],[143.86396,-38.66209],[143.86482,-38.67125],[143.85235,-38.67478],[143.84048,-38.68149],[143.83678,-38.68777],[143.83285,-38.69204],[143.82261,-38.69122],[143.81376,-38.69265],[143.80208,-38.69633],[143.77512,-38.70385],[143.76466,-38.7046],[143.75592,-38.70654],[143.73697,-38.71518],[143.71482,-38.72464],[143.69251,-38.73255],[143.66897,-38.75415],[143.67111,-38.7623],[143.6499,-38.78234],[143.613,-38.77502],[143.59166,-38.75524],[143.58148,-38.74164],[143.56403,-38.74493],[143.55395,-38.75637],[143.54766,-38.76806],[143.53362,-38.78455],[143.50911,-38.77349],[143.47957,-38.76335],[143.45018,-38.77552],[143.43107,-38.78086],[143.42097,-38.75332],[143.4034,-38.71989],[143.3832,-38.70377],[143.39271,-38.68277],[143.38789,-38.68262],[143.37971,-38.68429],[143.36937,-38.68827],[143.35369,-38.70013],[143.33058,-38.71179],[143.31039,-38.73196],[143.28241,-38.74721],[143.26418,-38.74608],[143.2525,-38.74202],[143.25306,-38.73298],[143.24889,-38.72691],[143.23815,-38.71053],[143.22021,-38.70251],[143.17196,-38.67413],[143.15603,-38.69057],[143.14453,-38.68149],[143.11221,-38.66806],[143.08006,-38.64788],[143.0505,-38.63777],[143.01675,-38.62357],[142.99615,-38.6192],[143.00009,-38.61272],[143.01032,-38.5882],[143.01158,-38.56304],[143.02596,-38.53351],[143.03214,-38.50153],[143.03371,-38.46457],[143.05018,-38.44426],[143.07619,-38.41289],[143.07936,-38.39329],[143.06778,-38.38411],[143.05748,-38.35493],[143.05141,-38.33705],[143.07641,-38.32313],[143.11818,-38.29126],[143.12497,-38.25413],[143.15495,-38.22893],[143.19317,-38.1945],[143.26058,-38.14956],[143.31683,-38.11505],[143.44602,-38.04771],[143.51471,-38.02711],[143.62406,-38.02416],[143.69724,-38.0454],[143.74409,-38.06064],[143.79366,-38.07369],[143.86717,-38.08206],[144.06287,-38.09977],[144.12892,-38.1027],[144.17068,-38.11469],[144.28609,-38.13783],[144.31416,-38.12969],[144.33006,-38.08571],[144.36895,-38.05981],[144.39773,-38.0515],[144.48937,-38.0032],[144.62545,-37.93064],[144.65841,-37.91955],[144.71161,-37.88019],[144.77572,-37.86494],[144.78471,-37.84468],[144.84387,-37.82503],[144.89378,-37.82694],[144.92261,-37.82816],[144.94701,-37.826],[144.95012,-37.8224],[144.95701,-37.82041],[144.95722,-37.81368],[144.96297,-37.81364]];
@@ -528,7 +557,7 @@ const pad2 = n => String(n).padStart(2,"0");
 function entriesHTML(day){
   return day.items.map(it=>{
     const [icon,cat] = K[it.k] || ["compass","See"];
-    const thumb = it.img ? `<figure class="thumb"><img src="${it.img}" alt="${it.n}" loading="lazy" onerror="this.closest('.thumb').remove()"></figure>` : "";
+    const thumb = `<figure class="thumb"><img src="${it.img||day.hero}" alt="${it.n}" loading="lazy" onerror="this.closest('.thumb').remove()"></figure>`;
     const rate = (it.r!==null&&it.r!==undefined) ? `<span class="rate ${rateClass(it.r)}">★ ${it.r.toFixed(1)}</span>` : "";
     return `<article class="entry">${thumb}<div class="eb"><div class="ek"><i data-lucide="${icon}"></i><span class="cat">${cat}</span></div>
       <a class="namelink" href="${gmaps(it.n,it.q)}" target="_blank" rel="noopener"><span class="en">${it.n}</span>${rate}</a>
