@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#F4ECDD" />
+<meta name="robots" content="noindex, nofollow">
+<title>Coast, Vines &amp; the Great Ocean Road — 10 Days in Victoria</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet" />
+
+<style>
+  :root{
+    --paper:#F4ECDD; --paper-2:#EFE5D2; --paper-3:#EADFC9;
+    --ink:#211C18; --ink-soft:#5C5247; --ink-faint:#8A7F70;
+    --line:rgba(33,28,24,.16); --line-soft:rgba(33,28,24,.09);
+    --accent:#B5572F; --ocean:#1E4E5F; --sage:#5F7544; --gold:#9A6B1E;
+    --serif:"Fraunces",Georgia,"Times New Roman",serif;
+    --sans:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    --indent:54px; --maxw:1080px;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.62;font-optical-sizing:auto;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+  body::after{content:"";position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.045;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  img{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+  .serif{font-family:var(--serif)}
+  .kicker{font-family:var(--sans);font-size:11.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint)}
+  .kicker svg{width:14px;height:14px;stroke-width:1.6;color:var(--accent);vertical-align:-2px;margin-right:5px}
+
+  .bar{position:sticky;top:0;z-index:1000;background:rgba(244,236,221,.86);backdrop-filter:saturate(150%) blur(8px);-webkit-backdrop-filter:saturate(150%) blur(8px);border-bottom:1px solid var(--line)}
+  .bar .row{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;gap:16px;padding:11px 22px}
+  .bar .brand{font-family:var(--serif);font-weight:500;font-size:16px;white-space:nowrap}
+  .bar nav{display:flex;gap:16px;overflow-x:auto;scrollbar-width:none;margin-left:auto}
+  .bar nav::-webkit-scrollbar{display:none}
+  .bar nav a{flex:0 0 auto;font-size:11px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft);padding:4px 0;border-bottom:1.5px solid transparent;white-space:nowrap}
+  .bar nav a:hover{color:var(--accent);border-color:var(--accent)}
+
+  .mast{padding:58px 0 26px}
+  .mast .eyebrow{margin-bottom:22px}
+  .mast h1{font-family:var(--serif);font-weight:400;font-size:clamp(2.7rem,8.4vw,5.6rem);line-height:.99;letter-spacing:-.015em;margin:0 0 .35em;max-width:14ch}
+  .mast h1 em{font-style:italic;color:var(--accent)}
+  .mast .dek{font-size:clamp(1.05rem,2.4vw,1.32rem);line-height:1.5;color:var(--ink-soft);max-width:46ch}
+  .mast .meta{display:flex;flex-wrap:wrap;gap:10px 0;margin-top:30px;border-top:1px solid var(--line);padding-top:18px}
+  .mast .meta div{flex:1 1 33%;min-width:140px;padding-right:14px}
+  .mast .meta .k{display:block;margin-bottom:4px}
+  .mast .meta .v{font-family:var(--serif);font-size:1.45rem;font-weight:400;line-height:1.1}
+
+  .shead{max-width:var(--maxw);margin:60px auto 0;padding:0 22px}
+  .shead .kicker{display:block;margin-bottom:10px}
+  .shead h2{font-family:var(--serif);font-weight:400;font-size:clamp(1.8rem,4.6vw,2.8rem);line-height:1.05;letter-spacing:-.01em;margin:0;max-width:20ch}
+  .shead p{color:var(--ink-soft);max-width:54ch;margin:.7em 0 0}
+
+  /* SCROLLY map story */
+  .scrolly{position:relative;margin-top:20px}
+  .scrolly-map{position:sticky;top:0;height:100vh;height:100svh;z-index:0;background:var(--paper-3)}
+  #map{width:100%;height:100%}
+  .maplegend{position:absolute;left:14px;top:54px;z-index:3;background:rgba(244,236,221,.92);border:1px solid var(--line);padding:10px 12px;border-radius:3px;pointer-events:none;max-width:46vw}
+  .maplegend b{display:block;font-family:var(--sans);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:6px}
+  .maplegend span{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--ink-soft);margin:2px 0}
+  .maplegend i{width:9px;height:9px;border-radius:50%;display:inline-block;flex:0 0 auto}
+  .scrolly-steps{position:relative;z-index:2;margin-top:-100vh;margin-top:-100svh}
+  .step{min-height:90vh;min-height:90svh;display:flex;align-items:flex-end;justify-content:center;padding:0 18px 11vh;pointer-events:none}
+  .step:first-child{align-items:flex-end}
+  .scard{pointer-events:auto;background:rgba(244,236,221,.94);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);border:1px solid var(--line);box-shadow:0 10px 40px rgba(33,28,24,.18);max-width:430px;width:100%;padding:20px 22px;opacity:.45;transform:translateY(8px);transition:opacity .4s,transform .4s}
+  .scard.on{opacity:1;transform:none}
+  .scard .kicker{display:block;margin-bottom:8px}
+  .scard .kicker b{color:var(--sc);font-weight:700}
+  .scard h3{font-family:var(--serif);font-weight:400;font-size:1.7rem;line-height:1.05;margin:0 0 6px}
+  .scard p{font-size:.98rem;color:var(--ink-soft);margin:0}
+  .scard .jump{display:inline-flex;align-items:center;gap:5px;margin-top:12px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--accent);padding-bottom:1px}
+  .maplibregl-popup-content{background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:3px;font-family:var(--sans);font-size:13px;padding:12px 14px;box-shadow:0 8px 30px rgba(33,28,24,.22)}
+  .maplibregl-popup-content .pn{font-family:var(--serif);font-size:16px;font-weight:500;display:block;margin-bottom:2px}
+  .maplibregl-popup-content .pk{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-faint)}
+  .maplibregl-popup-content a{color:var(--accent);font-weight:600;display:inline-block;margin-top:7px;border-bottom:1px solid var(--accent)}
+  .maplibregl-popup-tip{display:none}
+  .maplibregl-ctrl-group{background:var(--paper);border:1px solid var(--line)}
+
+  .dossier{max-width:var(--maxw);margin:46px auto 0;padding:0 22px}
+  .dossier .inner{border:1px solid var(--ink);background:var(--paper-2);padding:26px 26px 28px}
+  .dossier ol{list-style:none;counter-reset:d;margin:18px 0 0;padding:0}
+  .dossier li{counter-increment:d;position:relative;padding:0 0 16px 46px;margin:0 0 16px;border-bottom:1px solid var(--line-soft)}
+  .dossier li:last-child{border:0;margin-bottom:0;padding-bottom:0}
+  .dossier li::before{content:counter(d,decimal-leading-zero);position:absolute;left:0;top:-2px;font-family:var(--serif);font-size:1.5rem;font-weight:400;color:var(--accent);line-height:1}
+  .dossier li b{font-weight:600}
+  .dossier a{color:var(--accent);border-bottom:1px solid var(--accent)}
+  .dossier .lead{font-size:13px}
+
+  .days{max-width:var(--maxw);margin:30px auto 0;padding:0 22px;position:relative}
+  .spine{position:relative;padding-left:var(--indent)}
+  .spine::before{content:"";position:absolute;left:16px;top:8px;bottom:40px;width:1px;background:linear-gradient(var(--line),var(--line) 96%,transparent)}
+  .chapter{position:relative;padding-top:58px;scroll-margin-top:66px}
+  .chapter:first-child{padding-top:30px}
+  .ch-num{position:absolute;left:calc(16px - var(--indent));top:54px;transform:translate(-50%,0);width:40px;height:40px;border-radius:50%;background:var(--paper);border:1.5px solid var(--ch);color:var(--ch);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1.05rem;font-weight:500;z-index:2}
+  .chapter:first-child .ch-num{top:26px}
+  .ch-head .kicker{display:block;margin-bottom:9px;color:var(--ink-soft)}
+  .ch-head .kicker b{color:var(--ch);font-weight:700}
+  .ch-title{font-family:var(--serif);font-weight:400;font-size:clamp(2rem,6vw,3.3rem);line-height:1;letter-spacing:-.015em;margin:0}
+  .ch-stay{display:inline-flex;align-items:center;gap:6px;margin-top:12px;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ch)}
+  .ch-stay svg{width:14px;height:14px;stroke-width:1.7}
+  .ch-figure{margin:24px 0 6px;margin-left:calc(-1 * var(--indent));position:relative;height:clamp(220px,38vh,400px);overflow:hidden}
+  .ch-figure img{width:100%;height:100%;object-fit:cover;filter:saturate(.92) contrast(1.02)}
+  .ch-figure .tab{position:absolute;left:0;bottom:0;background:var(--ch);color:#fff;font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;padding:7px 13px}
+  .ch-intro{font-size:1.06rem;line-height:1.6;color:var(--ink);margin:24px 0 6px;max-width:56ch}
+  .ch-intro::first-letter{font-family:var(--serif);font-size:2.1em;font-weight:500;float:left;line-height:.82;padding:6px 10px 0 0;color:var(--ch)}
+
+  .blocklabel{display:flex;align-items:center;gap:9px;margin:30px 0 0;padding-bottom:8px;border-bottom:1px solid var(--ink)}
+  .blocklabel svg{width:18px;height:18px;stroke-width:1.5;color:var(--ch)}
+  .blocklabel h3{font-family:var(--serif);font-weight:400;font-size:1.4rem;margin:0}
+
+  .entries{margin-top:8px}
+  .entry{display:flex;gap:16px;align-items:flex-start;padding:20px 0;border-bottom:1px solid var(--line-soft)}
+  .entry .thumb{flex:0 0 96px;width:96px;height:96px;overflow:hidden;background:var(--paper-3)}
+  .entry .thumb img{width:100%;height:100%;object-fit:cover;filter:saturate(.92)}
+  .entry .eb{flex:1 1 auto;min-width:0}
+  .entry .ek{display:flex;align-items:center;gap:7px;margin-bottom:5px}
+  .entry .ek .cat{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
+  .entry .ek svg{width:15px;height:15px;stroke-width:1.6;color:var(--ch)}
+  .entry .en{font-family:var(--serif);font-size:1.32rem;font-weight:500;line-height:1.15;display:inline;border-bottom:1.5px solid transparent;transition:border-color .15s}
+  .entry a.namelink:hover .en{border-color:var(--accent)}
+  .entry .rate{font-family:var(--sans);font-size:11px;font-weight:700;color:var(--sage);white-space:nowrap;margin-left:8px;vertical-align:2px}
+  .entry .rate.ok{color:var(--gold)}.entry .rate.low{color:var(--ink-faint)}
+  .entry .eblurb{color:var(--ink-soft);font-size:.96rem;margin:7px 0 0;max-width:60ch}
+  .entry .go{display:inline-flex;align-items:center;gap:5px;margin-top:9px;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+  .entry .go svg{width:13px;height:13px;stroke-width:1.8}
+
+  .skip{margin:26px 0 0;padding:18px 20px;background:var(--paper-2);border-left:2px solid var(--ocean)}
+  .skip .kicker{display:block;color:var(--ocean);margin-bottom:10px}
+  .skip ul{margin:0;padding:0;list-style:none}
+  .skip li{font-size:.95rem;color:var(--ink-soft);padding:5px 0;border-bottom:1px solid var(--line-soft)}
+  .skip li:last-child{border:0}.skip li b{color:var(--ink);font-weight:600}
+
+  .dine{margin-top:6px}
+  .dine-area{display:block;margin:14px 0 4px;color:var(--ch)}
+  .tierkey{font-size:11px;color:var(--ink-faint);letter-spacing:.02em}
+  .tierkey b{font-family:var(--serif);font-weight:600}
+  .tierkey .t1{color:var(--sage)}.tierkey .t2{color:var(--gold)}.tierkey .t3{color:var(--accent)}
+  .meal{display:grid;grid-template-columns:78px 1fr;gap:4px 14px;padding:11px 0;border-top:1px solid var(--line-soft)}
+  .meal .slot{font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);padding-top:4px}
+  .mopts{display:flex;flex-direction:column;gap:9px}
+  .mopt{font-size:.94rem;line-height:1.38}
+  .mopt .tier{font-family:var(--serif);font-weight:600;margin-right:7px;letter-spacing:-.04em}
+  .mopt .tier.t1{color:var(--sage)}.mopt .tier.t2{color:var(--gold)}.mopt .tier.t3{color:var(--accent)}
+  .mopt .mn{font-weight:600;border-bottom:1px solid transparent}
+  .mopt a:hover .mn{border-color:var(--accent)}
+  .mopt .mmeta{color:var(--ink-faint);font-size:.8rem;white-space:nowrap}
+  .mopt .mb{color:var(--ink-soft);display:block;font-size:.86rem;margin-top:1px}
+
+  .tours{margin-top:30px;border:1px solid var(--line);background:var(--paper-2)}
+  .tours>summary{cursor:pointer;list-style:none;padding:16px 18px;display:flex;align-items:center;gap:12px;font-family:var(--serif);font-size:1.18rem;font-weight:500}
+  .tours>summary::-webkit-details-marker{display:none}
+  .tours>summary>svg{width:19px;height:19px;stroke-width:1.5;color:var(--ch);flex:0 0 auto}
+  .tours>summary .chev{margin-left:auto;color:var(--accent);transition:transform .2s;flex:0 0 auto;display:inline-flex}
+  .tours>summary .chev svg{width:20px;height:20px;stroke-width:2}
+  .tours[open]>summary .chev{transform:rotate(90deg)}
+  .tbody{padding:2px 18px 18px}
+  .platforms{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 14px}
+  .platforms a{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--ink);padding:8px 13px;color:var(--ink)}
+  .platforms a:hover{background:var(--ink);color:var(--paper)}
+  .tour{padding:12px 0;border-top:1px solid var(--line-soft)}
+  .tour .tn{font-family:var(--serif);font-size:1.08rem;font-weight:500;line-height:1.2}
+  .tour .tmeta{font-size:12px;color:var(--ink-faint);margin-top:3px}
+  .tour .tdep{color:var(--ocean);font-weight:600;letter-spacing:.02em}
+  .tour .tlinks{margin-top:6px}
+  .tour .tlinks a{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--accent);margin-right:15px;border-bottom:1px solid var(--accent)}
+  .tnote{font-size:12px;color:var(--ink-faint);font-style:italic;margin-top:14px;line-height:1.5}
+
+  .practical{max-width:var(--maxw);margin:70px auto 0;padding:0 22px}
+  .pgrid{margin-top:22px;border-top:1px solid var(--ink)}
+  .pgrid .r{display:flex;flex-wrap:wrap;gap:6px 24px;padding:16px 0;border-bottom:1px solid var(--line-soft)}
+  .pgrid .t{flex:0 0 150px}
+  .pgrid .d{flex:1 1 320px;color:var(--ink-soft);font-size:.98rem}
+  footer{max-width:var(--maxw);margin:60px auto 0;padding:30px 22px 56px;border-top:1px solid var(--line);font-size:12px;color:var(--ink-faint);line-height:1.7}
+  footer .ft{font-family:var(--serif);font-size:1.15rem;color:var(--ink);margin-bottom:8px}
+
+  .reveal.in{animation:rise .7s cubic-bezier(.2,.6,.2,1) both}@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+  
+
+  @media(min-width:760px){
+    :root{--indent:104px}
+    .spine::before{left:34px}
+    .ch-num{left:calc(34px - var(--indent));top:58px;width:62px;height:62px;font-size:1.7rem;border-width:2px}
+    .chapter:first-child .ch-num{top:30px}
+    .entry{gap:26px;padding:26px 0}
+    .entry .thumb{flex-basis:200px;width:200px;height:138px}
+    .entry:nth-child(even){flex-direction:row-reverse}
+    .mast .meta div{flex:1 1 0}
+    .meal{grid-template-columns:96px 1fr}
+    .mopts{display:grid;grid-template-columns:1fr 1fr;gap:9px 24px}
+    .step{justify-content:flex-start;padding-left:5vw}
+    .scard{margin:0}
+  }
+  @media(prefers-reduced-motion:reduce){.reveal.in{animation:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<div class="bar"><div class="row">
+  <span class="brand">Victoria, by car</span>
+  <nav id="topnav"></nav>
+</div></div>
+
+<header class="mast wrap">
+  <div class="eyebrow kicker">10-Day Self-Drive · Victoria, Australia · Late November</div>
+  <h1 class="serif">Coast, Vines &amp; the <em>Great Ocean Road</em></h1>
+  <p class="dek">A day-by-day plan from Melbourne's laneways through the Yarra Valley and Mornington
+    Peninsula to the Otway rainforest and the Twelve Apostles — with breakfast, lunch and dinner
+    mapped to where you'll be each day, at every budget.</p>
+  <div class="meta">
+    <div><span class="k kicker">The shape</span><span class="v serif">≈ 600 km loop</span></div>
+    <div><span class="k kicker">The window</span><span class="v serif">Late November</span></div>
+    <div><span class="k kicker">The ground</span><span class="v serif">10 days · 50+ stops</span></div>
+  </div>
+</header>
+
+<div class="shead reveal" style="margin-top:40px">
+  <span class="kicker">Fly the Route</span>
+  <h2 class="serif">Scroll to travel the loop, day by day</h2>
+  <p>The map follows along as you scroll — real roads, the ferry crossing dashed, and every stop
+    pinned and numbered by day. Pinch, drag or go fullscreen to explore; tap a pin for Google Maps.</p>
+</div>
+
+<section class="scrolly">
+  <div class="scrolly-map">
+    <div id="map"></div>
+    <div class="maplegend" id="maplegend"></div>
+  </div>
+  <div class="scrolly-steps" id="steps"></div>
+</section>
+
+<div class="dossier reveal">
+  <div class="inner">
+    <span class="kicker">Before You Go — Book &amp; Verify</span>
+    <ol>
+      <li class="lead"><b>Searoad ferry (Day 7).</b> Pre-book the 7am or 8am vehicle sailing online (~A$106, cheaper than the gate; check in 40 min early). → <a href="https://www.searoad.com.au" target="_blank" rel="noopener">searoad.com.au</a></li>
+      <li class="lead"><b>Lorne waterfalls (Day 7).</b> Jan 2026 floods closed several tracks (Erskine base, Sheoak). Re-check <a href="https://www.parks.vic.gov.au" target="_blank" rel="noopener">parks.vic.gov.au</a>; Teddy's &amp; Marriners lookouts are reliable anchors.</li>
+      <li class="lead"><b>Loch Ard Gorge beach steps (Day 9).</b> Due to reopen Oct 2026 — confirm. Gibson Steps beach reopened Feb 2026.</li>
+      <li class="lead"><b>Dining hours.</b> Cellar doors are mostly lunch-only (Thu–Sun); small-town venues take midweek closures. Check the day-of and book splurge tables well ahead.</li>
+    </ol>
+  </div>
+</div>
+
+<div class="days"><div class="spine" id="chapters"></div></div>
+
+<section class="practical reveal">
+  <span class="kicker">Field Notes</span>
+  <h2 class="serif" style="font-family:var(--serif);font-weight:400;font-size:clamp(1.8rem,4.6vw,2.8rem);margin:.2em 0 0;line-height:1.05">Practical, before the romance</h2>
+  <div class="pgrid">
+    <div class="r"><div class="t kicker">Budget tiers</div><div class="d"><b>$</b> casual, under ~A$25pp (bakeries, banh mi, fish &amp; chips, pub counter) · <b>$$</b> mid, ~A$25–60 · <b>$$$</b> splurge, A$60+ (hatted &amp; cellar-door degustation).</div></div>
+    <div class="r"><div class="t kicker">Weather</div><div class="d">Mild, changeable spring (18–22°C; cooler and windier on the coast). Pack layers, a rain shell, and closed shoes for muddy rainforest tracks.</div></div>
+    <div class="r"><div class="t kicker">Daylight</div><div class="d">Long — sunsets ~8:08pm on the Peninsula to ~8:35pm on the Shipwreck Coast. This is what makes the crowd-free sunset strategy work.</div></div>
+    <div class="r"><div class="t kicker">Driving</div><div class="d">The Great Ocean Road is winding and slower than it looks — budget generously and watch for wildlife at dawn and dusk. Whale season is over by late November.</div></div>
+  </div>
+</section>
+
+<footer>
+  <div class="ft serif">Coast, Vines &amp; the Great Ocean Road</div>
+  Built from region-by-region research · ratings and prices are approximate (mid-2026), a guide not gospel — reconfirm hours and book ahead.<br>
+  Map: MapLibre GL + CARTO/OpenStreetMap · Routes: OSRM · Globe: globe.gl · Tours via GetYourGuide &amp; Klook · Type: Fraunces &amp; Hanken Grotesk.
+</footer>
+
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://unpkg.com/scrollama@3.2.0/build/scrollama.min.js"></script>
+<script>
+const IMG = {
+  melb:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Melbourne_skyline_sor.jpg/960px-Melbourne_skyline_sor.jpg",
+  botanic:"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Botanical_gardens_main_entrance.jpg/960px-Botanical_gardens_main_entrance.jpg",
+  qvm:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Aerial_photograph_of_Queen_Victoria_Market.jpg/960px-Aerial_photograph_of_Queen_Victoria_Market.jpg",
+  fitzroy:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/The_Fitzroy_skyline.jpg/960px-The_Fitzroy_skyline.jpg",
+  yarra:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Yarra_Valley_%281%29.jpg/960px-Yarra_Valley_%281%29.jpg",
+  healesville:"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Healesville_Grand_Hotel.JPG/960px-Healesville_Grand_Hotel.JPG",
+  steavenson:"https://upload.wikimedia.org/wikipedia/commons/c/cd/Steavenson_Falls_10_January_1999.jpg",
+  capeschanck:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/20250312-DJI_0070.jpg/960px-20250312-DJI_0070.jpg",
+  sorrento:"https://upload.wikimedia.org/wikipedia/commons/0/06/Sorrento_beach_melbourne_b.jpg",
+  gorsign:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/2009-0825-GreatOceanRoadsign.jpg/960px-2009-0825-GreatOceanRoadsign.jpg",
+  splitpoint:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/SplitPoint_0072.jpg/960px-SplitPoint_0072.jpg",
+  erskine:"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Erskine_Falls.jpg/960px-Erskine_Falls.jpg",
+  lorne:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/LorneVictoriaDec122024_03.jpg/960px-LorneVictoriaDec122024_03.jpg",
+  koala:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Koala_climbing_tree.jpg/960px-Koala_climbing_tree.jpg",
+  apollobay:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Apollo_Bay_from_Mariners_Lookout.jpg/960px-Apollo_Bay_from_Mariners_Lookout.jpg",
+  otway:"https://upload.wikimedia.org/wikipedia/commons/0/08/Lake_elizabeth.jpg",
+  triplet:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/20100102_Triplet_Falls_-_Otway_Ranges_-_Victoria_-_Australia.JPG/960px-20100102_Triplet_Falls_-_Otway_Ranges_-_Victoria_-_Australia.JPG",
+  hopetoun:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Hopetoun_falls.jpg/960px-Hopetoun_falls.jpg",
+  apostles:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/The_Twelve_Apostles_2011.jpg/960px-The_Twelve_Apostles_2011.jpg",
+  gibson:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Gibson-Steps-Dec2010.jpg/960px-Gibson-Steps-Dec2010.jpg",
+  lochard:"https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Aerial_views_of_Loch_Ard_Gorge_and_Port_Campbell_National_Park%2C_Victoria%2C_Australia.webm/500px--Aerial_views_of_Loch_Ard_Gorge_and_Port_Campbell_National_Park%2C_Victoria%2C_Australia.webm.jpg",
+  london:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/LondonArch2014.jpg/960px-LondonArch2014.jpg",
+  portcampbell:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Port_Campbell.jpg/960px-Port_Campbell.jpg",
+  camperdown:"https://upload.wikimedia.org/wikipedia/commons/6/6b/Camperdown_main_street.jpg",
+};
+const K = {see:["compass","See"],view:["mountain","Lookout"],eat:["utensils","Eat"],coffee:["coffee","Coffee"],wine:["wine","Cellar door"],walk:["footprints","Walk"],stay:["bed","Stay"],spring:["waves","Springs"],koala:["leaf","Wildlife"],ferry:["ship","Ferry"],drive:["car","Drive"],falls:["droplets","Falls"],market:["store","Market"],bar:["wine","Bar"]};
+const C = {melb:"#4A4039", yarra:"#7C8A5A", morn:"#2E6E6E", gor:"#C06A33", otway:"#1F4E5C", ret:"#B0883C"};
+const REGIONS = [{name:"Melbourne",ch:C.melb},{name:"Yarra Valley",ch:C.yarra},{name:"Mornington Peninsula",ch:C.morn},{name:"Great Ocean Road",ch:C.gor},{name:"Otways & Shipwreck Coast",ch:C.otway},{name:"The Return",ch:C.ret}];
+
+function gmaps(name,q){ return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q || (name + ", Victoria, Australia")); }
+function rateClass(r){ if(r===null||r===undefined) return ""; if(r>=4.5) return ""; if(r>=4.3) return "ok"; return "low"; }
+const gyg = q => "https://www.getyourguide.com/s/?q=" + encodeURIComponent(q);
+const klook = q => "https://www.klook.com/en-AU/search/?query=" + encodeURIComponent(q);
+const gsearch = q => "https://www.google.com/search?q=" + encodeURIComponent(q);
+
+const TOURS = {
+  melb:{ dep:"All depart central Melbourne (CBD pickup, ~7–9am) — full-day excursions, an alternative to a city day.",
+    gygUrl:"https://www.getyourguide.com/melbourne-l202/", klookUrl:"https://www.klook.com/en-AU/destination/c69-melbourne/",
+    items:[
+      {n:"Great Ocean Road & Twelve Apostles — full day",meta:"~A$95–155 · ~12 hrs · GetYourGuide / Klook",dep:"Departs Melbourne CBD",q:"Great Ocean Road Twelve Apostles day tour from Melbourne",on:["gyg","klook"]},
+      {n:"Phillip Island Penguin Parade",meta:"~A$129–175 · ~10–12 hrs · GetYourGuide / Klook",dep:"Departs Melbourne CBD",q:"Phillip Island penguin parade tour from Melbourne",on:["gyg","klook"]},
+      {n:"Yarra Valley wine tour (lunch + tastings)",meta:"~A$109–190 · ~8 hrs · GetYourGuide / Klook",dep:"Departs Melbourne CBD",q:"Yarra Valley wine tour from Melbourne",on:["gyg","klook"]},
+      {n:"Mornington Peninsula + Hot Springs",meta:"~A$160–199 · ~7–8 hrs · GetYourGuide / Klook",dep:"Departs Melbourne CBD",q:"Mornington Peninsula hot springs tour from Melbourne",on:["gyg","klook"]},
+      {n:"Puffing Billy & Dandenong Ranges",meta:"~A$139–219 · ~6–8 hrs · GetYourGuide / Klook",dep:"Departs Melbourne CBD",q:"Puffing Billy Dandenong Ranges tour from Melbourne",on:["gyg","klook"]},
+      {n:"Grampians National Park",meta:"~A$115–165 · ~12 hrs · GetYourGuide / Klook",dep:"Departs Melbourne CBD",q:"Grampians day tour from Melbourne",on:["gyg","klook"]},
+      {n:"Wilsons Promontory",meta:"~A$105–169 · ~12 hrs · GetYourGuide / Klook",dep:"Departs Melbourne CBD",q:"Wilsons Promontory day tour from Melbourne",on:["gyg","klook"]}
+    ]},
+  yarra:{ dep:"Local pickups available in Healesville / Yarra Glen (choose the in-region ticket, not the Melbourne-pickup version).",
+    gygUrl:"https://www.getyourguide.com/yarra-valley-l2136/", klookUrl:"https://www.klook.com/en-AU/search/?query=Yarra%20Valley",
+    items:[
+      {n:"Hop It — hop-on-hop-off winery bus",meta:"~A$70–125 · full day · GetYourGuide / Klook / direct",dep:"Departs any in-region stop (Healesville, Yarra Glen, Yering)",q:"Hop It Yarra Valley hop on hop off wine bus",on:["gyg","klook"]},
+      {n:"Yarra Valley Touring — full-day wine / wine+gin",meta:"~A$160–220 · ~6–7 hrs · book direct",dep:"Pickup at Healesville / Yarra Glen / Lilydale",q:"Yarra Valley Touring full day wine tour Healesville pickup",on:["gyg","direct"]},
+      {n:"Healesville Sanctuary — entry ticket",meta:"~A$36–43 · self-guided · GetYourGuide / Klook",dep:"At the Sanctuary, Badger Creek (no transport)",q:"Healesville Sanctuary entry ticket",on:["gyg","klook"]}
+    ]},
+  morn:{ dep:"In-region pickups are limited — most GetYourGuide/Klook wine tours here depart Melbourne. The springs are a self-drive entry ticket.",
+    gygUrl:"https://www.getyourguide.com/mornington-peninsula-l1878/", klookUrl:"https://www.klook.com/en-AU/search/?query=Mornington%20Peninsula",
+    items:[
+      {n:"Peninsula Hot Springs — Bath House entry",meta:"~A$45–55 weekday · self-paced · GetYourGuide / Klook",dep:"At the springs, Fingal/Rye (no transport)",q:"Peninsula Hot Springs bath house entry ticket",on:["gyg","klook"]},
+      {n:"Local Way Tours — Wine & Hot Springs",meta:"from ~A$245 · ~8 hrs · GetYourGuide / direct",dep:"In-region Peninsula accommodation pickup",q:"Local Way Tours Mornington Peninsula wine hot springs",on:["gyg","direct"]},
+      {n:"Wine Time Tours — Peninsula wine tour",meta:"~A$150–250pp · half/full day · book direct",dep:"Pickup at your Sorrento/Rye/Dromana accommodation",q:"Wine Time Tours Mornington Peninsula wine tour Sorrento",on:["direct"]}
+    ]},
+  apollo:{ dep:"Apollo Bay is best treated as a self-drive base — most “Apollo Bay” listings on the big platforms are Melbourne tours passing through. The genuine local experiences are booked direct.",
+    gygUrl:"https://www.getyourguide.com/apollo-bay-l143715/", klookUrl:"https://www.klook.com/en-AU/search/?query=Apollo%20Bay",
+    items:[
+      {n:"Apollo Bay Surf & Kayak — guided seal-colony sea kayak",meta:"~A$99 · ~2 hrs · book direct",dep:"Departs Apollo Bay main beach / Marengo Marine Sanctuary",q:"Apollo Bay Surf and Kayak seal colony tour",on:["direct"]},
+      {n:"Otway Eco Tours — dawn platypus canoe (Lake Elizabeth)",meta:"~A$90–130 · ~2.5 hrs · book direct",dep:"Lake Elizabeth, near Forrest (Apollo Bay pickup on the Platypus Package)",q:"Otway Eco Tours platypus canoe Lake Elizabeth",on:["direct"]},
+      {n:"Wildlife Wonders — guided wildlife walk",meta:"~A$45–55 · ~1.5 hrs · GetYourGuide / direct",dep:"Sanctuary on the Great Ocean Rd just W of Apollo Bay",q:"Wildlife Wonders Apollo Bay guided walk",on:["gyg","direct"]}
+    ]},
+  pc:{ dep:"Coach day tours don't start in Port Campbell (they originate in Melbourne); the Apostles & Loch Ard are free, self-guided. The standout local-departure experience is the scenic helicopter.",
+    gygUrl:"https://www.getyourguide.com/twelve-apostles-l7952/", klookUrl:"https://www.klook.com/en-AU/search/?query=Twelve%20Apostles%20helicopter",
+    items:[
+      {n:"12 Apostles Helicopters — “12 Apostles to London Bridge”",meta:"~A$165 · 16 min · book direct (also KKday)",dep:"Departs 12 Apostles Heliport, Princetown (next to the Visitor Centre)",q:"12 Apostles Helicopters scenic flight",on:["direct"]},
+      {n:"12 Apostles Helicopters — “12 Apostles to Bay of Islands”",meta:"~A$245 · 25 min · book direct",dep:"Departs 12 Apostles Heliport, Princetown",q:"12 Apostles Helicopters Bay of Islands flight",on:["direct"]},
+      {n:"Twelve Apostles & Loch Ard Gorge boardwalks",meta:"Free · self-guided · no booking",dep:"On the Great Ocean Rd, ~5 min from Port Campbell",q:"Twelve Apostles viewing platform car park",on:["maps"]}
+    ]}
+};
+const SKIP = {
+  melb:["<b>Hosier Lane</b> — famous for being next to the station, not the art. A 10-minute look. Better: AC/DC Lane, Croft Alley, Centre Place.","<b>Cooks' Cottage</b> — paid entry for what you see from outside; enjoy the free gardens.","<b>Skydeck “The Edge”</b> upsell — poor value; a free rooftop bar gives a comparable view with a drink.","<b>Lygon St spruiker restaurants</b> (~4.1) — eat in the Carlton side streets instead."],
+  yarra:["<b>Domaine Chandon</b> (4.3) — the most touristy, crowded winery; a quick glass at most.","<b>Yarra Valley Chocolaterie</b> (4.5 but ~12,600 reviews) — coach-tour mega-stop; fast ice cream only.","<b>Yering Station restaurant</b> (~4.2) — soft ratings and tour-bus traffic; better lunches elsewhere.","<b>Levantine Hill</b> — beautiful but recurring “overpriced” reviews; splurge only."],
+  morn:["<b>Pt. Leo Wine Terrace</b> (casual restaurant, ~2.1) — do the Sculpture Park and Laura instead.","<b>Just Fine Food, Sorrento</b> (~3.3) — famous vanilla slice; a snack-stop, not a meal.","<b>Portsea Hotel</b> rooms/dining (~2.8) — great location, underwhelming rooms and food.","<b>Metung Hot Springs</b> — fine, but it's ~3.5 hr east in Gippsland; not a Mornington option."],
+  gor:["<b>Koala Kafe / first 200m of Grey River Rd</b> — overrun, fed-parrot circus. Walk further up.","<b>Fort Queenscliff</b> — tour-only with limited hours; a time-sink on a driving day.","<b>Split Point paid tower climb</b> — the free Eagle Rock walk gives the better view."],
+  otway:["<b>Otway Fly Treetop Walk</b> (4.4, ~A$25–30) — “nothing you can't see free on Maits Rest or Triplet.”","<b>Cape Otway Lightstation</b> paid entry — do the free koala drive instead.","<b>Thunder Cave</b> (4.1) — underwhelming after Loch Ard.","<b>Twelve Apostles at midday</b> — right place, wrong time. Sunset or sunrise only."],
+  ret:["<b>Brae (Birregurra)</b> — superb but a slow, pricey destination restaurant; not for a flight day unless deliberately planned."]
+};
+
+const DAYS = [
+  { region:"Melbourne", ch:C.melb, title:"Fitzroy & Collingwood", stay:"Base: Melbourne (night 1 of 3)", hero:IMG.fitzroy,
+    view:{center:[144.985,-37.800],zoom:12.4,pitch:50,bearing:18},
+    intro:"Land, drop the bags and walk straight into Melbourne's best inner-north — no car, just trams and your feet. Fitzroy and Collingwood for coffee, vintage stores and the city's densest bar strip, finishing with a long Brunswick St dinner.",
+    items:[
+      {n:"Fitzroy & Gertrude St",r:null,k:"see",b:"Bohemian-polished core: best bar density, vintage and design shops. Your morning wander.",lat:-37.80600,lng:144.97900},
+      {n:"Proud Mary",r:4.4,k:"coffee",b:"Institution-level Collingwood roastery — start the day with the city's signature export.",lat:-37.80230,lng:144.98515},
+      {n:"Collingwood — Smith St",r:null,k:"see",b:"Grittier creative strip: roasteries, record stores, live-music rooms. Walkable from Fitzroy.",lat:-37.80400,lng:144.98350},
+      {n:"Rose Street Artists' Market",r:4.6,k:"market",b:"Fitzroy weekends — handmade goods direct from makers, not mass tat.",lat:-37.79593,lng:144.97722}
+    ],
+    dining:{area:"Fitzroy & Collingwood", meals:{
+      B:[{t:"$",n:"Gertrude St counter cafés",a:"Fitzroy",b:"Eggs/pastry + coffee under A$15."},{t:"$$",n:"Archie's All Day",a:"Fitzroy",r:4.4,b:"Reliable all-day brunch, lovely courtyard."},{t:"$$",n:"Cibi",a:"Collingwood",r:4.5,b:"Japanese-fusion brunch in a calm warehouse."}],
+      L:[{t:"$",n:"N. Lee Bakery",a:"Smith St, Collingwood",r:4.6,b:"~A$7 grilled-pork banh mi; baked 3× daily."},{t:"$",n:"Sunny's Bakery",a:"Smith St, Collingwood",r:4.5,b:"Crispy pork roll; ask for extra chilli."},{t:"$$",n:"Tonkin",a:"Collingwood",r:4.4,b:"Sit-down pho and Vietnamese coffee."}],
+      D:[{t:"$$",n:"Ladro",a:"Fitzroy",r:4.5,b:"Wood-fired pizza + a glass of Italian — best-value Fitzroy dinner."},{t:"$$",n:"Jinda Thai",a:"Brunswick St, Fitzroy",r:4.7,b:"Doesn't dumb it down; consistently excellent."},{t:"$$$",n:"Cutler & Co.",a:"Gertrude St, Fitzroy",r:4.5,b:"McConnell's hatted flagship; special-occasion polish."}]
+    }}, skip:SKIP.melb, tours:TOURS.melb },
+
+  { region:"Melbourne", ch:C.melb, title:"Carlton & the Market", stay:"Base: Melbourne (night 2 of 3)", hero:IMG.qvm,
+    view:{center:[144.965,-37.805],zoom:12.5,pitch:50,bearing:-14},
+    intro:"A Carlton day: Lygon Street's real Italian side streets and Readings bookshop, the Carlton Gardens, then down into the CBD for Queen Victoria Market's deli halls and the hidden artist studios of the Nicholas Building.",
+    items:[
+      {n:"Carlton — Lygon St & Readings",r:null,k:"see",b:"Skip the tourist strip; the side streets (Rathdowne, Drummond) and Readings bookshop are the real village.",lat:-37.79805,lng:144.96719},
+      {n:"Queen Victoria Market",r:4.4,k:"market",b:"Go for the deli and food halls (Hellenic Deli since 1972); skip the import-tat sheds.",lat:-37.80747,lng:144.95705},
+      {n:"Nicholas Building",r:4.5,k:"see",b:"Heritage building full of artist studios, tiny galleries and quirky shops. Hidden Melbourne.",lat:-37.81676,lng:144.96679}
+    ],
+    dining:{area:"Carlton — Lygon St", meals:{
+      B:[{t:"$",n:"Brunetti Classico",a:"Lygon St, Carlton",r:4.3,b:"Cornetto + piccolo; side entrance skips the queue."},{t:"$$",n:"Humble Rays",a:"Carlton",r:4.6,b:"Crab-meat scramble is the standout; worth the wait."}],
+      L:[{t:"$$",n:"DOC Pizza & Mozzarella Bar",a:"Carlton",r:4.5,b:"Crisp crusts, fresh mozzarella — best pizza on Lygon."},{t:"$$",n:"Tiamo",a:"Lygon St, Carlton",r:4.4,b:"Silky pasta in a 1978 trattoria."},{t:"$$",n:"Universal Restaurant",a:"Lygon St, Carlton",r:4.4,b:"Famous monster parmas; old-school value."}],
+      D:[{t:"$$",n:"King & Godfree — Johnny's Green Room",a:"Lygon St, Carlton",r:4.4,b:"Aperitivo + osteria in a restored landmark, rooftop bar."},{t:"$$$",n:"Kazuki's",a:"Carlton",r:4.7,b:"Two-hat French-Japanese; 5/7-course tasting menus."}]
+    }} },
+
+  { region:"Melbourne", ch:C.melb, title:"Laneways & Gardens", stay:"Base: Melbourne (night 3 of 3)", hero:IMG.botanic,
+    view:{center:[144.968,-37.816],zoom:12.5,pitch:52,bearing:8},
+    intro:"Your last city day leans south — CBD laneways by morning, the Royal Botanic Gardens at their late-spring best, and South Melbourne Market for lunch. Pick up nothing heavier than a coffee; tomorrow you drive.",
+    items:[
+      {n:"Patricia Coffee Brewers",r:4.6,k:"coffee",b:"Standing-room espresso bar; the connoisseur's pick. In the Free Tram Zone.",lat:-37.81470,lng:144.95829},
+      {n:"Royal Botanic Gardens Melbourne",r:4.7,k:"see",b:"89 acres, glorious in late spring — perfect for the 7–8pm golden hour.",lat:-37.82946,lng:144.98132},
+      {n:"South Melbourne Market",r:4.6,k:"market",b:"Best all-rounder for locals — go Tue/Wed/Fri morning, not the Saturday crush.",lat:-37.83217,lng:144.95649}
+    ],
+    dining:{area:"CBD laneways & South Melbourne", meals:{
+      B:[{t:"$",n:"Manchester Press",a:"Rankins Lane, CBD",r:4.4,b:"Classic laneway gem; the bagels are the star."},{t:"$",n:"The Journal Cafe",a:"Nicholas Building, CBD",r:4.3,b:"Local-secret spot inside the Nicholas Building."},{t:"$$",n:"The Hardware Société",a:"Hardware St, CBD",r:4.5,b:"Signature baked eggs; expect a wait."}],
+      L:[{t:"$",n:"South Melbourne Market Dim Sims",a:"South Melbourne Market",r:4.5,b:"60-year landmark; ~A$4, steamed or fried (Wed/Fri/Sat/Sun)."},{t:"$$",n:"Aptus Seafood",a:"South Melbourne Market",r:4.5,b:"Award-winning oysters by the dozen (~A$20)."},{t:"$",n:"Simply Pho You",a:"Clarendon St, South Melbourne",r:4.5,b:"Reliable pho/banh mi if the market's closed."}],
+      D:[{t:"$$",n:"Stalactites",a:"Lonsdale St, CBD",r:4.4,b:"45-year Greek souvlaki institution, open very late."},{t:"$$",n:"Cumulus Inc.",a:"Flinders Lane, CBD",r:4.5,b:"The defining all-day Melbourne diner; walk-ins welcome."},{t:"$$$",n:"Attica",a:"Ripponlea (~15 min)",r:4.6,b:"Three-hat degustation (~A$300). Book months ahead."}]
+    }} },
+
+  { region:"Yarra Valley", ch:C.yarra, title:"Into the Vines", stay:"Base: Healesville (night 1 of 2) · ~1 hr drive", hero:IMG.yarra,
+    view:{center:[145.45,-37.690],zoom:10.4,pitch:55,bearing:28},
+    intro:"Collect the rental car and point it east. An hour later the vines start. A long winery lunch, a couple of intimate cellar doors, gin in Healesville, then settle into the valley for two nights.",
+    items:[
+      {n:"Oakridge Wines",r:4.6,k:"wine",b:"One-hatted, seasonal lunch with a panoramic vineyard view. The best long-lunch pick (Thu–Mon).",lat:-37.68363,lng:145.45842},
+      {n:"Pimpernel Vineyards",r:4.8,k:"wine",b:"Tiny family cellar door — the winemaker often pours. The standout intimate pick.",lat:-37.69106,lng:145.47337},
+      {n:"Warramunda Estate",r:4.7,k:"wine",b:"Halliday 5-star; feels like an extension of the family home.",lat:-37.68378,lng:145.45082},
+      {n:"TarraWarra Estate & Museum of Art",r:4.6,k:"wine",b:"Subterranean cellar door beside an art museum. Wine, food and culture in one stop.",lat:-37.66038,lng:145.46899},
+      {n:"Four Pillars Distillery",r:4.8,k:"see",b:"Award-winning gin in Healesville — G&T paddles and distillery tours.",lat:-37.65736,lng:145.50991},
+      {n:"Healesville",r:null,k:"stay",b:"Overnight base — central and walkable. Stay: Healesville Hotel (heritage) or boutique Yarra Gables.",lat:-37.65372,lng:145.51615,img:IMG.healesville}
+    ],
+    dining:{area:"city breakfast → winery lunch → Healesville", meals:{
+      B:[{t:"$",n:"Patricia Coffee Brewers",a:"Melbourne CBD",r:4.6,b:"Grab-and-go coffee + pastry before the car-hire pickup."},{t:"$",n:"5 & Dime Bagels",a:"Melbourne CBD",r:4.4,b:"Fast, filling pre-drive fuel."},{t:"$$",n:"The Hardware Société",a:"Melbourne CBD",r:4.5,b:"A proper sit-down French brunch before the valley."}],
+      L:[{t:"$",n:"Yarra Valley Dairy",a:"Yering",b:"On-site cheese + grazing plates (~A$32). Best-value, open daily."},{t:"$",n:"Coldstream Brewery",a:"Coldstream",b:"Burgers, pizza, house beers (Wed–Sun)."},{t:"$$",n:"Tokar Estate",a:"Coldstream",r:4.4,b:"Mediterranean plates + vineyard views; 2-course w/ wine ~A$58."},{t:"$$$",n:"Oakridge Wines",a:"Coldstream",r:4.6,b:"Hatted, hyper-local set menu (Thu–Mon). The destination lunch."}],
+      D:[{t:"$",n:"Healesville Grand Hotel",a:"Healesville",b:"Dependable pub counter meals, 7 days (parma ~A$21)."},{t:"$$",n:"Zoncello Yarra Valley",a:"Healesville",b:"Lively Italian salumeria, spritz-forward (Thu–Mon)."},{t:"$$$",n:"No.7 Healesville",a:"Healesville",r:4.6,b:"Intimate share-plate wine bar; best-rated splurge (Thu–Sun)."}]
+    }}, skip:SKIP.yarra, tours:TOURS.yarra },
+
+  { region:"Yarra Valley", ch:C.yarra, title:"The Black Spur", stay:"Base: Healesville (night 2 of 2)", hero:IMG.steavenson,
+    view:{center:[145.62,-37.575],zoom:10.3,pitch:60,bearing:0},
+    intro:"Trade vines for forest. Drive the Black Spur under 100m mountain ash early, chase a waterfall or the redwoods, and keep the evening easy back in Healesville. (The Black Spur runs north-east, the Redwoods south-east — pick one direction.)",
+    items:[
+      {n:"Black Spur Drive",r:null,k:"drive",b:"30km of twisting road under giant mountain ash. Drive early for misty light; pull into the picnic grounds.",lat:-37.60500,lng:145.55500,q:"Fernshaw Picnic Area Black Spur"},
+      {n:"Steavenson Falls",r:4.7,k:"falls",b:"Tall falls near Marysville, short accessible walk; floodlit at night.",lat:-37.53283,lng:145.77400},
+      {n:"Maroondah Reservoir Park",r:4.6,k:"see",b:"Manicured gardens, dam-wall walk and lookout — easy and close to Healesville.",lat:-37.64422,lng:145.55075},
+      {n:"Redwood Forest (Cement Creek)",r:4.7,k:"see",b:"Eerie rows of 90-year-old Californian redwoods, East Warburton. Go early; narrow access road.",lat:-37.71972,lng:145.75265}
+    ],
+    dining:{area:"Healesville & the day's route", meals:{
+      B:[{t:"$",n:"Wild Grains Bakehouse",a:"Healesville",r:4.6,b:"Pies, almond croissants, good coffee (closed Sun)."},{t:"$",n:"Harvest Coffee",a:"Healesville Hotel",b:"Hole-in-the-wall Genovese coffee + pastries, 7 days."},{t:"$$",n:"My Little Kitchen",a:"Healesville",r:4.1,b:"Bright cafe, strong GF/vegan, opens early."}],
+      L:[{t:"$",n:"The Warburton Bakery",a:"Warburton (SE route)",r:4.5,b:"Best-rated cheap lunch on either route; warm pies, 7 days."},{t:"$",n:"Fraga's Cafe",a:"Marysville (NE route)",r:4.4,b:"Fresh, healthy, good coffee; strong vegan/GF."},{t:"$",n:"Marysville Country Bakery",a:"Marysville (NE route)",r:4.0,b:"Award-winning pies, outdoor seating, daily."}],
+      D:[{t:"$",n:"Healesville Grand Hotel",a:"Healesville",b:"The any-night pub fallback."},{t:"$$",n:"Healesville Hotel (dining room)",a:"Healesville",r:4.1,b:"Restored country pub; own butcher, top regional wine list."},{t:"$$$",n:"No.7 Healesville",a:"Healesville",r:4.6,b:"Share-plate splurge (Thu–Sun) — book ahead."}]
+    }} },
+
+  { region:"Mornington Peninsula", ch:C.morn, title:"Wine by the Sea", stay:"Base: Sorrento · ~1.5–2 hr drive", hero:IMG.sorrento,
+    view:{center:[144.88,-38.420],zoom:10.4,pitch:55,bearing:-22},
+    intro:"Drive south to where the countryside meets the sea. A bay-view winery lunch, a cliff walk at Cape Schanck or Bushrangers Bay, a twilight soak in the hot springs, and a night in Sorrento right by tomorrow's ferry.",
+    items:[
+      {n:"Foxeys Hangout",r:4.4,k:"wine",b:"Red Hill hidden-gem with a distant bay outlook. Tiny — arrive early (groups capped at 4).",lat:-38.36243,lng:145.01303},
+      {n:"Pt. Leo Estate — Sculpture Park",r:4.5,k:"see",b:"~60 monumental works on a bay-front lawn (1–2 hrs). Skip the casual Wine Terrace.",lat:-38.40617,lng:145.07476},
+      {n:"Bushrangers Bay Walk",r:4.7,k:"walk",b:"Secluded basalt-cliff cove with kangaroos en route; no facilities keeps the crowds out. Best unique pick.",lat:-38.47340,lng:144.92757},
+      {n:"Cape Schanck Boardwalk & Lighthouse",r:4.6,k:"walk",b:"Timber stairs down volcanic cliffs to a wave-pounded platform; 1859 lighthouse above.",lat:-38.49275,lng:144.88652,img:IMG.capeschanck},
+      {n:"Sorrento Back Beach rock pools",r:null,k:"see",b:"Go ~2 hrs either side of low tide for clear aquamarine pools. Scenery, not open-water swimming.",lat:-38.34682,lng:144.72833},
+      {n:"Pond Bathhouse",r:4.8,k:"spring",b:"Quietest and highest-rated springs — capped at 16, adults-only. Best quiet soak; book early.",lat:-38.21660,lng:145.03753},
+      {n:"Peninsula Hot Springs",r:4.5,k:"spring",b:"The original (50+ pools) but bus-tour heavy. Worth it off-peak; Spa Dreaming Centre is calmer.",lat:-38.40693,lng:144.84273},
+      {n:"Sorrento",r:null,k:"stay",b:"Overnight base, walking distance from the ferry. Stay: InterContinental Sorrento or Hotel Sorrento.",lat:-38.34194,lng:144.73426}
+    ],
+    dining:{area:"Healesville departure → peninsula winery → Sorrento", meals:{
+      B:[{t:"$",n:"Wild Grains Bakehouse",a:"Healesville",r:4.6,b:"Grab a pastry before departing (closed Sun)."},{t:"$",n:"Harvest Coffee",a:"Healesville",b:"Quick coffee + toastie on the way out."}],
+      L:[{t:"$",n:"The Epicurean Red Hill",a:"Red Hill South",b:"Daytime cafe + providore; pizzas from ~A$19.50."},{t:"$$",n:"Merricks General Store",a:"Merricks",b:"1924 store: cafe + bistro + cellar door; famous scones, daily."},{t:"$$",n:"Foxeys Hangout",a:"Red Hill",b:"Cult cellar-door wine bar; small plates ~A$16 (Fri–Mon, no bookings)."},{t:"$$$",n:"Laura at Pt. Leo Estate",a:"Merricks",r:4.5,b:"Relais & Châteaux dining + sculpture park & bay views (8-course ~A$175)."}],
+      D:[{t:"$$",n:"The Continental (“The Conti”)",a:"Sorrento",b:"Reimagined 1875 landmark; gastro-pub + wood-fired pizza, daily."},{t:"$$",n:"Bistro Elba",a:"Sorrento",r:4.2,b:"French-inspired steakhouse/seafood — open 7 days (the safe weeknight bet)."},{t:"$$$",n:"Audrey's at The Continental",a:"Sorrento",b:"Scott Pickett's seafood-led splurge (5-course ~A$150); no driving."}]
+    }}, skip:SKIP.morn, tours:TOURS.morn },
+
+  { region:"Great Ocean Road", ch:C.gor, title:"Onto the Great Ocean Road", stay:"Base: Apollo Bay · ferry + ~2.5 hr drive", hero:IMG.lorne,
+    view:{center:[143.82,-38.650],zoom:9.6,pitch:60,bearing:40},
+    intro:"Roll onto the morning ferry and skip Melbourne entirely, landing at the start of the Great Ocean Road. A lighthouse, a waterfall, wild koalas at Kennett River, and a sunset over Apollo Bay.",
+    items:[
+      {n:"Searoad Ferry",r:4.4,k:"ferry",b:"The 40-min crossing IS the experience (dolphins & seals common). Pre-book the 7/8am sailing.",lat:-38.33671,lng:144.74485,q:"Searoad Ferries Sorrento Terminal"},
+      {n:"Split Point Lighthouse",r:4.5,k:"view",b:"The “Round the Twist” lighthouse, Aireys Inlet. Do the free Eagle Rock clifftop walk; skip the paid climb.",lat:-38.46772,lng:144.10424,img:IMG.splitpoint},
+      {n:"Memorial Arch, Eastern View",r:4.5,k:"see",b:"The classic Great Ocean Road sign photo. Shoot it fast (mid-morning bottleneck) and move on.",lat:-38.47192,lng:144.04453,img:IMG.gorsign},
+      {n:"Teddy's Lookout, Lorne",r:4.6,k:"view",b:"5-minute walk to where the St George River bends to meet the ocean. Best low-crowd short stop.",lat:-38.55425,lng:143.97890},
+      {n:"Erskine Falls",r:4.6,k:"falls",b:"30m falls near Lorne. Verify open — Jan 2026 floods closed the base track; top platform usually fine.",lat:-38.50695,lng:143.91349,img:IMG.erskine},
+      {n:"Kennett River koalas",r:4.5,k:"koala",b:"Australia's most reliable free wild-koala spot. Walk UP Grey River Rd past the crowded first 200m.",lat:-38.66661,lng:143.86176,img:IMG.koala,q:"Grey River Road Kennett River koalas"},
+      {n:"Marriners Lookout, Apollo Bay",r:4.7,k:"view",b:"Short uphill walk to a panorama over the bay — outstanding at golden hour. Arrive early for parking.",lat:-38.73805,lng:143.66921,img:IMG.apollobay},
+      {n:"Apollo Bay",r:null,k:"stay",b:"Overnight. Stay: Captains at the Bay (boutique B&B) or Chris's Beacon Point Villas (sea-view).",lat:-38.75515,lng:143.66759}
+    ],
+    dining:{area:"ferry breakfast → Lorne lunch → Apollo Bay", meals:{
+      B:[{t:"$",n:"Baked In",a:"Sorrento (pre-ferry)",r:4.1,b:"Pies, croissants; opens early. Best pre-ferry grab."},{t:"$",n:"Rolling Pin Pies & Cakes",a:"Queenscliff (after ferry)",r:4.4,b:"Award-winning pies right off the boat."},{t:"$$",n:"Charlie Noble",a:"Queenscliff",r:4.2,b:"Cooked breakfast on a deck over the harbour."}],
+      L:[{t:"$",n:"The Bottle of Milk",a:"Lorne",r:4.2,b:"Gourmet burgers + shakes opposite the beach. Best-value casual."},{t:"$$",n:"Moons Espresso Bar",a:"Lorne",r:4.2,b:"Busy main-street all-day cafe (expect a queue)."},{t:"$$$",n:"Ipsos Restaurant & Bar",a:"Lorne",r:4.5,b:"One-hatted modern Greek; lamb & octopus (Thu–Sun lunch — confirm)."}],
+      D:[{t:"$",n:"Apollo Bay Fishermen's Co-Op",a:"Apollo Bay",r:4.3,b:"Fresh-off-the-boat fish & chips by the harbour. Best-value seafood."},{t:"$$",n:"Great Ocean Road Brewhouse",a:"Apollo Bay Hotel",r:4.3,b:"Pub bistro, 100+ craft beers, hearty mains."},{t:"$$$",n:"Chris's Beacon Point",a:"Skenes Creek (5 min E)",r:4.3,b:"Clifftop Greek-Med fine dining with panoramic views (confirm dinner nights)."}]
+    }}, skip:SKIP.gor, tours:TOURS.apollo },
+
+  { region:"Otways & Shipwreck Coast", ch:C.otway, title:"Rainforest to the Apostles", stay:"Base: Port Campbell (night 1 of 2)", hero:IMG.apostles,
+    view:{center:[143.30,-38.720],zoom:9.6,pitch:62,bearing:20},
+    intro:"Through the Otway rainforest — boardwalks under giant tree ferns, koalas on Lighthouse Road — then out to the Shipwreck Coast to stand at the Twelve Apostles as the buses leave and the cliffs turn gold (~8:30pm).",
+    items:[
+      {n:"Maits Rest Rainforest Walk",r:4.7,k:"walk",b:"800m boardwalk loop through 300-year-old myrtle beech and giant tree ferns. Feels prehistoric. Top pick.",lat:-38.75600,lng:143.57600,img:IMG.otway},
+      {n:"Cape Otway koala drive",r:null,k:"koala",b:"Free, and one of Victoria's most reliable wild-koala stretches. Drive slow, look up. Skip the paid lightstation.",lat:-38.82000,lng:143.51500,q:"Lighthouse Road Cape Otway koalas"},
+      {n:"Triplet Falls",r:4.6,k:"falls",b:"2km loop, three-tier cascade through mountain ash — the most scenic Otway falls.",lat:-38.67111,lng:143.49306,img:IMG.triplet},
+      {n:"Hopetoun Falls",r:4.6,k:"falls",b:"30m drop into a fern gully; short but steep stairs. Pairs with nearby Beauchamp Falls (4.8).",lat:-38.66778,lng:143.57028,img:IMG.hopetoun},
+      {n:"Twelve Apostles",r:4.7,k:"see",b:"The icon — go at sunset when the cliffs glow orange and the crowds have cleared.",lat:-38.66583,lng:143.10444,img:IMG.apostles},
+      {n:"Gibson Steps",r:4.7,k:"walk",b:"89 steps to stand beneath the cliffs (beach reopened Feb 2026). Best at low tide.",lat:-38.66833,lng:143.11194,img:IMG.gibson},
+      {n:"Melba Gully glow worms",r:4.6,k:"see",b:"Hundreds of glow worms after full dark (~9:15pm) near Lavers Hill. A dedicated detour, but memorable. Dim/red torch only.",lat:-38.69801,lng:143.37046},
+      {n:"Port Campbell",r:null,k:"stay",b:"2-night base. Stay: Sea Foam Villas (bay-view, central) or Daysy Hill Country Cottages.",lat:-38.61960,lng:142.99540,img:IMG.portcampbell}
+    ],
+    dining:{area:"Apollo Bay → the Otways (thin for food — pack a snack) → Port Campbell", meals:{
+      B:[{t:"$",n:"Apollo Bay Bakery",a:"Apollo Bay",r:4.3,b:"Home of the scallop pie. Grab-and-go for an early start."},{t:"$$",n:"The Bayleaf Cafe",a:"Apollo Bay",r:4.2,b:"Reliable brunch + very good coffee, opens ~7:45am."}],
+      L:[{t:"$$",n:"Otway NouriShed",a:"Ferguson (on-route)",r:4.6,b:"Converted potato-shed cafe; toasties, pies, good coffee (closed Tue). Best on-route stop."},{t:"$",n:"Grassroots Deli",a:"Port Campbell",r:4.5,b:"The dependable fallback if you push through (Otways food is scarce)."}],
+      D:[{t:"$$",n:"12 Rocks Beach Bar Cafe",a:"Port Campbell",r:4.2,b:"Best all-round dinner; Mod-Oz/seafood, beachfront (kitchen to ~8pm)."},{t:"$$",n:"Port Campbell Hotel — Craypot Bistro",a:"Port Campbell",r:4.2,b:"Cosy pub, open fires, local flake & seafood risotto."},{t:"$$",n:"Waves Cafe Bar & Restaurant",a:"Port Campbell",r:4.1,b:"Seafood platters; closest to upscale (no true fine-dining in town)."}]
+    }}, skip:SKIP.otway, tours:TOURS.pc },
+
+  { region:"Otways & Shipwreck Coast", ch:C.otway, title:"The Quiet Coast", stay:"Base: Port Campbell (night 2 of 2)", hero:IMG.london,
+    view:{center:[142.95,-38.620],zoom:10.4,pitch:62,bearing:-10},
+    intro:"Beat the crowds with a sunrise at Loch Ard Gorge, then work west to the quiet half of the coast — the Grotto, London Bridge and the Bay of Islands, where the stacks rival the Apostles without the crush.",
+    items:[
+      {n:"Loch Ard Gorge",r:4.8,k:"see",b:"Gorge, blowhole and the Razorback — beautifully quiet at sunrise. Beach steps due to reopen Oct 2026.",lat:-38.64642,lng:143.07061,img:IMG.lochard},
+      {n:"The Grotto",r:4.6,k:"see",b:"The underrated standout: a cave-blowhole-rock-window with a stairway down. Quiet at sunset.",lat:-38.61611,lng:142.91583},
+      {n:"London Bridge (Arch)",r:4.6,k:"see",b:"Collapsed-span arch; genuinely good at sunset with fewer buses.",lat:-38.62194,lng:142.93250,img:IMG.london},
+      {n:"Bay of Islands",r:4.6,k:"see",b:"Peterborough — “the Apostles without the crowds.” Far fewer people, just as scenic.",lat:-38.60400,lng:142.83300},
+      {n:"Childers Cove",r:4.7,k:"see",b:"Twin coves ringed by cliffs forming a natural amphitheatre. Genuinely off the tourist track.",lat:-38.49020,lng:142.67230}
+    ],
+    dining:{area:"Port Campbell & the Peterborough coast", meals:{
+      B:[{t:"$$",n:"Grassroots Deli & Cafe",a:"Port Campbell",r:4.5,b:"Highest-rated in town; bacon-and-egg rolls, great coffee, 7 days."},{t:"$$",n:"Forage on the Foreshore",a:"Port Campbell",r:4.3,b:"Bay views, big breakfasts (closed Wed, daytime only)."}],
+      L:[{t:"$",n:"Peterborough General Store",a:"Peterborough (10 min W)",r:4.4,b:"Best-value casual; fish & chips, pizza, near Bay of Islands."},{t:"$$",n:"12 Rocks Beach Bar Cafe",a:"Port Campbell",r:4.2,b:"Beer-battered fish, calamari, burgers with bay views."},{t:"$$",n:"Schomberg Inn",a:"Peterborough",r:4.3,b:"Family pub strong on local seafood/oysters (call — reduced hours)."}],
+      D:[{t:"$$",n:"12 Rocks Beach Bar Cafe",a:"Port Campbell",r:4.2,b:"Beachfront sunset setting; the all-round pick."},{t:"$$",n:"Port Campbell Hotel — Craypot Bistro",a:"Port Campbell",r:4.2,b:"Pub classics, open fires — a good alternate night."},{t:"$$",n:"Waves Cafe Bar & Restaurant",a:"Port Campbell",r:4.1,b:"Seafood platters, broad GF menu."}]
+    }} },
+
+  { region:"The Return", ch:C.ret, title:"The Long Way Home", stay:"Drop the car at the airport / city · ~3–3.5 hr", hero:IMG.camperdown,
+    view:{center:[143.55,-38.150],zoom:8.4,pitch:45,bearing:0},
+    intro:"The easy way home. Take the faster inland route (Princes Hwy via Camperdown), with a distillery lunch at Timboon and a crater-lake lookout at Camperdown, then back to Melbourne for the flight.",
+    items:[
+      {n:"Timboon Railway Shed Distillery",r:4.5,k:"eat",b:"~20 min off Port Campbell — a whisky distillery with a genuinely good deck lunch. The best single food stop.",lat:-38.48435,lng:142.97787},
+      {n:"Mt Leura Lookout, Camperdown",r:4.6,k:"view",b:"Climb to 360° views over the volcanic plains and the elm-lined town below.",lat:-38.24431,lng:143.15764,img:IMG.camperdown},
+      {n:"Lakes Bullen Merri & Gnotuk",r:4.5,k:"see",b:"Twin crater lakes right beside Camperdown — a quick scenic leg-stretch.",lat:-38.26000,lng:143.10000}
+    ],
+    dining:{area:"Port Campbell breakfast → an inland lunch", meals:{
+      B:[{t:"$$",n:"Grassroots Deli & Cafe",a:"Port Campbell",r:4.5,b:"Breakfast from 7:30am, 7 days — best for an early start."}],
+      L:[{t:"$$",n:"Timboon Railway Shed Distillery",a:"Timboon",r:4.5,b:"Cheese/antipasto platters, steak sandwich + whisky tastings (7 days). The anchor stop."},{t:"$",n:"Timboon Bakery",a:"Timboon",r:4.4,b:"Pies, bacon-and-egg rolls, coffee (closed Sun)."},{t:"$",n:"Timboon Fine Ice Cream",a:"Timboon",r:4.7,b:"24+ award-winning ice creams — the dessert detour."},{t:"$$",n:"Hampden Hotel",a:"Camperdown",r:4.4,b:"Historic 1868 pub, bistro lunch daily — handy on the Princes Hwy."}]
+    }}, skip:SKIP.ret }
+];
+
+/* precomputed OSRM driving geometry (lon,lat) */
+const ROUTE_A = [[144.96297,-37.81364],[144.96217,-37.81225],[144.96594,-37.81115],[144.97104,-37.80964],[144.97306,-37.80809],[144.97666,-37.80808],[144.98373,-37.80883],[144.98998,-37.80948],[144.99166,-37.80727],[144.99286,-37.80008],[144.99346,-37.7962],[144.99187,-37.7945],[144.99441,-37.79516],[145.00617,-37.79366],[145.02285,-37.79119],[145.04693,-37.79077],[145.05704,-37.78686],[145.06742,-37.78424],[145.0804,-37.77973],[145.09998,-37.78435],[145.10884,-37.79335],[145.13209,-37.79723],[145.16273,-37.80191],[145.17774,-37.80384],[145.18811,-37.80082],[145.19536,-37.80075],[145.21421,-37.81106],[145.22199,-37.81017],[145.23071,-37.81055],[145.24007,-37.8087],[145.24734,-37.80284],[145.25418,-37.79763],[145.26353,-37.79102],[145.27542,-37.78664],[145.28266,-37.78333],[145.29294,-37.77399],[145.29765,-37.76894],[145.30883,-37.76265],[145.31394,-37.75856],[145.3208,-37.75894],[145.32958,-37.76059],[145.33919,-37.75983],[145.34274,-37.75618],[145.34655,-37.75677],[145.35066,-37.75755],[145.35525,-37.7574],[145.36459,-37.75353],[145.37273,-37.7499],[145.37389,-37.74625],[145.37418,-37.73798],[145.37791,-37.728],[145.37951,-37.72116],[145.38444,-37.71964],[145.38795,-37.71274],[145.39706,-37.70945],[145.408,-37.70706],[145.42111,-37.6966],[145.42442,-37.6851],[145.45045,-37.68346],[145.48182,-37.68339],[145.4857,-37.67811],[145.49062,-37.67753],[145.50464,-37.67716],[145.51146,-37.67012],[145.51336,-37.66278],[145.5165,-37.65908],[145.51483,-37.6555],[145.5118,-37.65586],[145.51224,-37.6611],[145.5119,-37.66761],[145.50795,-37.6751],[145.49264,-37.67711],[145.48631,-37.67737],[145.4839,-37.68126],[145.467,-37.68345],[145.42627,-37.684],[145.42226,-37.69039],[145.4097,-37.706],[145.4007,-37.70849],[145.38924,-37.71198],[145.38648,-37.71755],[145.38005,-37.72081],[145.37791,-37.728],[145.37446,-37.73751],[145.37386,-37.74599],[145.37296,-37.75001],[145.36264,-37.75492],[145.35652,-37.75738],[145.35169,-37.75749],[145.34705,-37.7569],[145.34339,-37.75607],[145.33979,-37.75835],[145.3342,-37.7612],[145.32172,-37.75916],[145.31431,-37.75868],[145.30967,-37.76232],[145.30183,-37.76665],[145.29367,-37.77245],[145.28405,-37.78292],[145.27772,-37.78583],[145.26595,-37.79016],[145.25725,-37.79562],[145.24743,-37.80302],[145.238,-37.81076],[145.22795,-37.81064],[145.21866,-37.81149],[145.21701,-37.81666],[145.21729,-37.84596],[145.21151,-37.86457],[145.21449,-37.88194],[145.21526,-37.90182],[145.21545,-37.91869],[145.20534,-37.94559],[145.1973,-37.96335],[145.19287,-37.98023],[145.1918,-37.9967],[145.18767,-38.01586],[145.18975,-38.02712],[145.18434,-38.05758],[145.17921,-38.0794],[145.17028,-38.08618],[145.15471,-38.09638],[145.16967,-38.1183],[145.17366,-38.13352],[145.16613,-38.16138],[145.15382,-38.19308],[145.13919,-38.20149],[145.12696,-38.22617],[145.11037,-38.2607],[145.08914,-38.27078],[145.07373,-38.27046],[145.06071,-38.27573],[145.04961,-38.28715],[145.03506,-38.29946],[145.01087,-38.31836],[144.98614,-38.33168],[144.96007,-38.34159],[144.94352,-38.34616],[144.92933,-38.35462],[144.91786,-38.36371],[144.90907,-38.37015],[144.90844,-38.3703],[144.90848,-38.36929],[144.90754,-38.36796],[144.89872,-38.36773],[144.88947,-38.36763],[144.87872,-38.3672],[144.87193,-38.36684],[144.87161,-38.36487],[144.86183,-38.36721],[144.84293,-38.37052],[144.83364,-38.37098],[144.82379,-38.37056],[144.81338,-38.36892],[144.80201,-38.36605],[144.78809,-38.36302],[144.77592,-38.36026],[144.76291,-38.35459],[144.76161,-38.34949],[144.75389,-38.34519],[144.74438,-38.33941],[144.74334,-38.33966]];
+const ROUTE_B = [[144.66166,-38.26789],[144.65239,-38.27095],[144.6273,-38.27211],[144.6137,-38.27261],[144.59042,-38.26458],[144.55802,-38.25954],[144.5385,-38.26861],[144.52414,-38.26959],[144.50824,-38.27331],[144.49886,-38.28196],[144.48729,-38.28188],[144.43895,-38.26449],[144.33713,-38.24914],[144.32249,-38.30133],[144.30202,-38.31303],[144.26462,-38.32614],[144.26281,-38.33888],[144.25178,-38.35209],[144.21652,-38.37675],[144.20445,-38.38831],[144.19218,-38.4046],[144.18629,-38.40784],[144.18401,-38.41498],[144.1735,-38.4211],[144.15252,-38.42934],[144.13513,-38.43239],[144.12197,-38.44001],[144.10649,-38.46053],[144.09389,-38.46495],[144.07943,-38.46823],[144.05106,-38.47087],[144.03341,-38.4777],[144.02928,-38.48161],[144.02521,-38.48257],[144.0247,-38.48431],[144.02353,-38.4891],[144.01591,-38.49213],[144.01025,-38.49784],[144.00683,-38.50058],[144.00176,-38.50976],[143.99356,-38.51643],[143.98487,-38.52564],[143.97499,-38.53483],[143.97414,-38.54239],[143.98325,-38.54808],[143.98197,-38.55454],[143.97587,-38.55509],[143.97626,-38.56117],[143.96912,-38.56714],[143.964,-38.57133],[143.95472,-38.57638],[143.94689,-38.57793],[143.93852,-38.58252],[143.93033,-38.58863],[143.92064,-38.59534],[143.9196,-38.60458],[143.91459,-38.61548],[143.9074,-38.62565],[143.89717,-38.63152],[143.89177,-38.63879],[143.88511,-38.6442],[143.87461,-38.65098],[143.86396,-38.66209],[143.86482,-38.67125],[143.85235,-38.67478],[143.84048,-38.68149],[143.83678,-38.68777],[143.83285,-38.69204],[143.82261,-38.69122],[143.81376,-38.69265],[143.80208,-38.69633],[143.77512,-38.70385],[143.76466,-38.7046],[143.75592,-38.70654],[143.73697,-38.71518],[143.71482,-38.72464],[143.69251,-38.73255],[143.66897,-38.75415],[143.67111,-38.7623],[143.6499,-38.78234],[143.613,-38.77502],[143.59166,-38.75524],[143.58148,-38.74164],[143.56403,-38.74493],[143.55395,-38.75637],[143.54766,-38.76806],[143.53362,-38.78455],[143.50911,-38.77349],[143.47957,-38.76335],[143.45018,-38.77552],[143.43107,-38.78086],[143.42097,-38.75332],[143.4034,-38.71989],[143.3832,-38.70377],[143.39271,-38.68277],[143.38789,-38.68262],[143.37971,-38.68429],[143.36937,-38.68827],[143.35369,-38.70013],[143.33058,-38.71179],[143.31039,-38.73196],[143.28241,-38.74721],[143.26418,-38.74608],[143.2525,-38.74202],[143.25306,-38.73298],[143.24889,-38.72691],[143.23815,-38.71053],[143.22021,-38.70251],[143.17196,-38.67413],[143.15603,-38.69057],[143.14453,-38.68149],[143.11221,-38.66806],[143.08006,-38.64788],[143.0505,-38.63777],[143.01675,-38.62357],[142.99615,-38.6192],[143.00009,-38.61272],[143.01032,-38.5882],[143.01158,-38.56304],[143.02596,-38.53351],[143.03214,-38.50153],[143.03371,-38.46457],[143.05018,-38.44426],[143.07619,-38.41289],[143.07936,-38.39329],[143.06778,-38.38411],[143.05748,-38.35493],[143.05141,-38.33705],[143.07641,-38.32313],[143.11818,-38.29126],[143.12497,-38.25413],[143.15495,-38.22893],[143.19317,-38.1945],[143.26058,-38.14956],[143.31683,-38.11505],[143.44602,-38.04771],[143.51471,-38.02711],[143.62406,-38.02416],[143.69724,-38.0454],[143.74409,-38.06064],[143.79366,-38.07369],[143.86717,-38.08206],[144.06287,-38.09977],[144.12892,-38.1027],[144.17068,-38.11469],[144.28609,-38.13783],[144.31416,-38.12969],[144.33006,-38.08571],[144.36895,-38.05981],[144.39773,-38.0515],[144.48937,-38.0032],[144.62545,-37.93064],[144.65841,-37.91955],[144.71161,-37.88019],[144.77572,-37.86494],[144.78471,-37.84468],[144.84387,-37.82503],[144.89378,-37.82694],[144.92261,-37.82816],[144.94701,-37.826],[144.95012,-37.8224],[144.95701,-37.82041],[144.95722,-37.81368],[144.96297,-37.81364]];
+const FERRY = [[144.7430,-38.3380],[144.6620,-38.2680]];
+
+/* ---------- render chapters ---------- */
+const host = document.getElementById("chapters");
+const pad2 = n => String(n).padStart(2,"0");
+function entriesHTML(day){
+  return day.items.map(it=>{
+    const [icon,cat] = K[it.k] || ["compass","See"];
+    const thumb = it.img ? `<figure class="thumb"><img src="${it.img}" alt="${it.n}" loading="lazy" onerror="this.closest('.thumb').remove()"></figure>` : "";
+    const rate = (it.r!==null&&it.r!==undefined) ? `<span class="rate ${rateClass(it.r)}">★ ${it.r.toFixed(1)}</span>` : "";
+    return `<article class="entry">${thumb}<div class="eb"><div class="ek"><i data-lucide="${icon}"></i><span class="cat">${cat}</span></div>
+      <a class="namelink" href="${gmaps(it.n,it.q)}" target="_blank" rel="noopener"><span class="en">${it.n}</span>${rate}</a>
+      <p class="eblurb">${it.b}</p><a class="go" href="${gmaps(it.n,it.q)}" target="_blank" rel="noopener"><i data-lucide="map-pin"></i>Open in Maps</a></div></article>`;
+  }).join("");
+}
+function optHTML(o){
+  const rate=(o.r!==null&&o.r!==undefined)?` · ★ ${o.r.toFixed(1)}`:"";
+  const tcls=o.t==="$"?"t1":(o.t==="$$"?"t2":"t3");
+  return `<div class="mopt"><span class="tier ${tcls}">${o.t}</span><a href="${gmaps(o.n,o.q)}" target="_blank" rel="noopener"><span class="mn">${o.n}</span></a><span class="mmeta"> · ${o.a}${rate}</span><span class="mb">${o.b||""}</span></div>`;
+}
+function diningHTML(day){
+  if(!day.dining) return "";
+  const dn=day.dining, slots=[["B","Breakfast"],["L","Lunch"],["D","Dinner"]];
+  const meals=slots.filter(([k])=>dn.meals[k]).map(([k,label])=>`<div class="meal"><div class="slot">${label}</div><div class="mopts">${dn.meals[k].map(optHTML).join("")}</div></div>`).join("");
+  return `<div class="dine"><div class="blocklabel"><i data-lucide="utensils-crossed"></i><h3>Where to eat</h3>
+    <span class="tierkey" style="margin-left:auto"><b class="t1">$</b> under A$25 &nbsp; <b class="t2">$$</b> A$25–60 &nbsp; <b class="t3">$$$</b> A$60+</span></div>
+    <span class="kicker dine-area">Today's meals — ${dn.area}</span>${meals}</div>`;
+}
+function toursHTML(day){
+  if(!day.tours) return "";
+  const t=day.tours;
+  const platforms=`<div class="platforms">${t.gygUrl?`<a href="${t.gygUrl}" target="_blank" rel="noopener">Browse on GetYourGuide ↗</a>`:""}${t.klookUrl?`<a href="${t.klookUrl}" target="_blank" rel="noopener">Browse on Klook ↗</a>`:""}</div>`;
+  const items=t.items.map(it=>{
+    let links="";
+    if(it.on.includes("gyg")) links+=`<a href="${gyg(it.q)}" target="_blank" rel="noopener">GetYourGuide ↗</a>`;
+    if(it.on.includes("klook")) links+=`<a href="${klook(it.q)}" target="_blank" rel="noopener">Klook ↗</a>`;
+    if(it.on.includes("direct")) links+=`<a href="${gsearch(it.q)}" target="_blank" rel="noopener">Find &amp; book direct ↗</a>`;
+    if(it.on.includes("maps")) links+=`<a href="${gmaps(it.q)}" target="_blank" rel="noopener">Open in Maps ↗</a>`;
+    return `<div class="tour"><div class="tn">${it.n}</div><div class="tmeta">${it.meta} · <span class="tdep">${it.dep}</span></div><div class="tlinks">${links}</div></div>`;
+  }).join("");
+  return `<details class="tours"><summary><i data-lucide="ticket"></i>Day trips &amp; guided tours<span class="chev"><i data-lucide="chevron-right"></i></span></summary>
+    <div class="tbody"><p class="tnote" style="margin-top:8px;font-style:normal;color:var(--ocean);font-weight:600">${t.dep}</p>${platforms}${items}
+    <p class="tnote">Prices are indicative adult fares (AUD). The “Browse” buttons open the platform's curated page for this area; per-tour links run a live search.</p></div></details>`;
+}
+DAYS.forEach((day,i)=>{
+  const skip = day.skip && day.skip.length ? `<aside class="skip"><span class="kicker">Skip in ${day.region} · Don't Bother</span><ul>${day.skip.map(s=>`<li>${s}</li>`).join("")}</ul></aside>` : "";
+  const sec=document.createElement("section"); sec.className="chapter reveal"; sec.id="day"+(i+1); sec.style.setProperty("--ch",day.ch);
+  sec.innerHTML=`<div class="ch-num">${pad2(i+1)}</div>
+    <div class="ch-head"><span class="kicker">Day ${i+1} · <b>${day.region}</b></span><h2 class="ch-title">${day.title}</h2>
+      <span class="ch-stay"><i data-lucide="map-pin"></i>${day.stay}</span></div>
+    <figure class="ch-figure"><img src="${day.hero}" alt="${day.title}" loading="lazy" onerror="this.closest('.ch-figure').style.display='none'"><span class="tab">Day ${i+1}</span></figure>
+    <p class="ch-intro">${day.intro}</p>
+    <div class="blocklabel"><i data-lucide="map"></i><h3>What to do</h3></div>
+    <div class="entries">${entriesHTML(day)}</div>${skip}${diningHTML(day)}${toursHTML(day)}`;
+  host.appendChild(sec);
+});
+
+/* nav + steps + legend */
+const nav=document.getElementById("topnav");
+const steps=document.getElementById("steps");
+DAYS.forEach((day,i)=>{
+  const a=document.createElement("a"); a.href="#day"+(i+1); a.textContent="Day "+(i+1); nav.appendChild(a);
+  const st=document.createElement("div"); st.className="step"; st.dataset.day=i+1;
+  st.innerHTML=`<div class="scard" style="--sc:${day.ch}"><span class="kicker">Day ${i+1} · <b>${day.region}</b></span>
+    <h3>${day.title}</h3><p>${day.intro.split(". ").slice(0,2).join(". ")}.</p>
+    <a class="jump" href="#day${i+1}">See the full day ↓</a></div>`;
+  steps.appendChild(st);
+});
+const ml=document.getElementById("maplegend");
+ml.innerHTML="<b>By region</b>"+REGIONS.map(r=>`<span><i style="background:${r.ch}"></i>${r.name}</span>`).join("");
+
+if(window.lucide) lucide.createIcons();
+
+/* ---------- MapLibre map ---------- */
+let map=null, mapReady=false, pendingDay=null;
+function stopsFC(){
+  const f=[];
+  DAYS.forEach((day,i)=>day.items.forEach(it=>{ if(typeof it.lat==="number") f.push({type:"Feature",properties:{color:day.ch,day:i+1,dayStr:String(i+1),region:day.region,name:it.n,url:gmaps(it.n,it.q)},geometry:{type:"Point",coordinates:[it.lng,it.lat]}}); }));
+  return {type:"FeatureCollection",features:f};
+}
+function lineFC(coords){ return {type:"Feature",properties:{},geometry:{type:"LineString",coordinates:coords}}; }
+try{
+  map=new maplibregl.Map({container:"map",style:"https://basemaps.cartocdn.com/gl/positron-gl-style/style.json",
+    center:[143.9,-38.2],zoom:6.4,pitch:40,bearing:0,attributionControl:true,cooperativeGestures:false});
+  map.addControl(new maplibregl.NavigationControl({visualizePitch:true}),"top-right");
+  map.addControl(new maplibregl.FullscreenControl({container:document.querySelector(".scrolly-map")}),"top-right");
+  map.on("load",()=>{
+    // arrow icon
+    const s=22,c=document.createElement("canvas");c.width=c.height=s;const x=c.getContext("2d");
+    x.fillStyle="#B5572F";x.beginPath();x.moveTo(5,4);x.lineTo(18,11);x.lineTo(5,18);x.closePath();x.fill();
+    map.addImage("arrow",{width:s,height:s,data:x.getImageData(0,0,s,s).data});
+    // routes
+    map.addSource("rA",{type:"geojson",data:lineFC(ROUTE_A)});
+    map.addSource("rB",{type:"geojson",data:lineFC(ROUTE_B)});
+    map.addSource("ferry",{type:"geojson",data:lineFC(FERRY)});
+    const lineStyle={"line-color":"#B5572F","line-width":3,"line-opacity":.85};
+    map.addLayer({id:"rA",type:"line",source:"rA",layout:{"line-cap":"round","line-join":"round"},paint:lineStyle});
+    map.addLayer({id:"rB",type:"line",source:"rB",layout:{"line-cap":"round","line-join":"round"},paint:lineStyle});
+    map.addLayer({id:"ferry",type:"line",source:"ferry",layout:{"line-cap":"round"},paint:{"line-color":"#1E4E5F","line-width":2.5,"line-dasharray":[1.5,2]}});
+    ["rA","rB"].forEach(r=>map.addLayer({id:r+"-arrow",type:"symbol",source:r,layout:{"symbol-placement":"line","symbol-spacing":90,"icon-image":"arrow","icon-size":.7,"icon-rotation-alignment":"map","icon-allow-overlap":true,"icon-ignore-placement":true}}));
+    // stops — clean region-coloured dots, no numbers/clusters
+    map.addSource("stops",{type:"geojson",data:stopsFC()});
+    map.addSource("active",{type:"geojson",data:{type:"FeatureCollection",features:[]}});
+    map.addLayer({id:"active-ring",type:"circle",source:"active",paint:{"circle-radius":13,"circle-color":"rgba(181,87,47,0.10)","circle-stroke-color":"#B5572F","circle-stroke-width":2.5}});
+    map.addLayer({id:"pts",type:"circle",source:"stops",paint:{"circle-color":["get","color"],"circle-radius":7,"circle-stroke-color":"#F4ECDD","circle-stroke-width":2}});
+    map.on("click","pts",e=>{const p=e.features[0].properties;new maplibregl.Popup({offset:12,closeButton:false}).setLngLat(e.features[0].geometry.coordinates).setHTML(`<span class="pn">${p.name}</span><span class="pk">Day ${p.day} · ${p.region}</span><br><a href="${p.url}" target="_blank" rel="noopener">Open in Google Maps →</a>`).addTo(map);});
+    map.on("mouseenter","pts",()=>map.getCanvas().style.cursor="pointer");
+    map.on("mouseleave","pts",()=>map.getCanvas().style.cursor="");
+    mapReady=true;
+    if(pendingDay) flyToDay(pendingDay); else map.flyTo({...DAYS[0].view,duration:0});
+  });
+}catch(e){ console.warn("map init failed",e); }
+
+function flyToDay(n){
+  if(!map) return;
+  if(!mapReady){ pendingDay=n; return; }
+  map.flyTo({...DAYS[n-1].view,duration:1700,essential:true});
+  const feats=DAYS[n-1].items.filter(it=>typeof it.lat==="number").map(it=>({type:"Feature",properties:{},geometry:{type:"Point",coordinates:[it.lng,it.lat]}}));
+  const src=map.getSource("active"); if(src) src.setData({type:"FeatureCollection",features:feats});
+}
+
+/* ---------- scrollama ---------- */
+if(window.scrollama){
+  const scroller=scrollama();
+  scroller.setup({step:".scrolly .step",offset:.62}).onStepEnter(resp=>{
+    document.querySelectorAll(".scard").forEach(c=>c.classList.remove("on"));
+    const card=resp.element.querySelector(".scard"); if(card) card.classList.add("on");
+    flyToDay(+resp.element.dataset.day);
+  });
+  window.addEventListener("resize",()=>scroller.resize());
+}
+
+/* reveal */
+const reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+if(!reduce&&"IntersectionObserver" in window){
+  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}})},{threshold:.08});
+  document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+}else{ document.querySelectorAll(".reveal").forEach(el=>el.classList.add("in")); }
+</script>
+</body>
+</html>
